@@ -1,12 +1,12 @@
 import { productSlug, servicePages } from './data/seoContent';
 export const defaultSiteUrl='https://www.vendorasystems.com';
 const basePages={
- '/':['Smart Vending Machines | Vendora Systems','Commercial vending machines with cashless payments, remote monitoring and deployment support for offices, campuses and public locations.'],
- '/products':['Commercial Vending Machine Lineup | Vendora','Compare vending machine capacity, cooling, payments, connectivity, dimensions and deployment options.'],
- '/about':['About Vendora Systems','Connected vending hardware and operational support for professional unattended retail.'],
+ '/':['Custom Vending Machine Manufacturer | Vendora Systems','OEM and ODM vending machines customized for your products, branding, dispensing, cooling, payments and software.'],
+ '/products':['Customizable Vending Machine Platforms | Vendora','Choose a commercial vending base model and customize capacity, dispensing, cooling, payments, connectivity and exterior branding.'],
+ '/about':['About Vendora Systems','Custom vending hardware and connected retail development for brands, operators and professional unattended retail.'],
  '/news-blog/':['Vending Operator Resources | Vendora','Practical guidance for vending location planning, assortment, restocking, payments and fleet uptime.'],
  '/faq':['Smart Vending Machine FAQ | Vendora','Answers about machine options, payments, telemetry, installation, lead times, warranty and service.'],
- '/contact':['Request a Vending Machine Quote | Vendora','Tell Vendora about your location, traffic, assortment, payment needs and rollout plan.'],
+ '/contact':['Request a Custom Vending Machine Quote | Vendora','Tell Vendora about your product, branding, dispensing, payment, software and production requirements.'],
  '/privacy':['Privacy Policy | Vendora Systems','How Vendora Systems collects, uses and protects business contact information.'],
  '/terms':['Terms of Use | Vendora Systems','Terms governing use of the Vendora Systems website.'],
  '/privacy-choices':['Privacy Choices | Vendora Systems','Manage optional analytics for the Vendora Systems website.'],

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft, Check, ClipboardPlus, FileCheck2, FlaskConical, PackageCheck } from 'lucide-react';
+import { ArrowLeft, Check, ClipboardPlus, CreditCard, FileCheck2, FlaskConical, PackageCheck, Palette, Settings2, Wifi } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
 import { useAuth } from '../context/AuthContext';
 import { categoryNames } from '../data/products';
@@ -22,6 +22,12 @@ export default function ProductDetail(){
   const gallery=Array.isArray(p.gallery)&&p.gallery.length?p.gallery:[p.image];
   const activeImage=gallery[Math.min(activeIndex,gallery.length-1)]||p.image;
   const add=async()=>{setError('');try{await addToRfqAssortment(p);setAdded(true)}catch(err){setError(err.message)}};
+  const customOptions=[
+    [Palette,'Exterior & branding','Cabinet color, full-body vinyl wrap, illuminated logo, fascia graphics and custom screen content.'],
+    [Settings2,'Product & dispensing','Shelf spacing, spiral size, conveyor, elevator, locker cells and collection-bin geometry.'],
+    [CreditCard,'Payment & access','Card, mobile wallet, QR, cash, membership, employee badge and identity verification.'],
+    [Wifi,'Software & connectivity','Custom interface, 4G/Wi-Fi/Ethernet, telemetry, API/ERP integration and remote promotions.'],
+  ];
 
   return <div className="min-h-screen bg-[#fbf7f2] pt-24"><main className="mx-auto max-w-7xl px-5 py-10 sm:px-8">
     <Link to="/products" className="mb-7 inline-flex items-center gap-2 text-sm font-semibold text-[#5f6a62]"><ArrowLeft size={16}/> Back to machine lineup</Link>
@@ -48,5 +54,6 @@ export default function ProductDetail(){
         <div className="mt-7 grid gap-3 border-y border-[#17201c]/10 py-6 sm:grid-cols-3"><span className="flex items-center gap-2 text-xs"><FileCheck2 size={17}/> Site survey</span><span className="flex items-center gap-2 text-xs"><FlaskConical size={17}/> Payment setup</span><span className="flex items-center gap-2 text-xs"><PackageCheck size={17}/> Delivery & installation</span></div>
       </section>
     </div>
+    <section className="mt-20 rounded-[2.5rem] bg-[#17201c] p-7 text-white sm:p-10"><div className="max-w-3xl"><p className="text-xs font-bold uppercase tracking-[.22em] text-[#f58a57]">Customize this model</p><h2 className="mt-3 font-heading text-3xl font-bold sm:text-4xl">Configure {p.name} around your product.</h2><p className="mt-4 leading-7 text-white/65">Send product dimensions, package weight, temperature range, payment market, desired branding and order quantity. Our team will return a recommended configuration and project scope.</p></div><div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">{customOptions.map(([Icon,title,body])=><div key={title} className="rounded-2xl bg-white/7 p-5"><Icon className="text-[#f58a57]" size={22}/><h3 className="mt-4 font-semibold">{title}</h3><p className="mt-2 text-sm leading-6 text-white/55">{body}</p></div>)}</div><Link to={`/contact?product=${encodeURIComponent(`${p.name} custom configuration`)}`} className="mt-8 inline-flex items-center rounded-full bg-[#d95f2b] px-6 py-3.5 font-semibold text-white">Request custom configuration</Link></section>
   </main></div>;
 }
