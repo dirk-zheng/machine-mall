@@ -3,4 +3,4 @@ Allow: /
 Disallow: /api/
 Disallow: /ws
 
-Sitemap: https://www.aureliabeauty.com/sitemap.xml
+Sitemap: https://www.vendorasystems.com/sitemap.xml

@@ -18,7 +18,7 @@ export default function ServicePage() {
             <h1 className="font-heading text-4xl md:text-6xl font-bold leading-tight mb-6">{service.title}</h1>
             <p className="text-lg text-slate-300 leading-relaxed">{service.intro}</p>
           </div>
-          <img src={service.image} alt="Aurelia cosmetic ingredient and formulation support" className="w-full aspect-[4/3] object-cover rounded-3xl border border-white/10" width="800" height="600" />
+          <img src={service.image} alt="Real-world commercial vending machine deployment" className="w-full aspect-[4/3] object-cover rounded-3xl border border-white/10" width="800" height="600" />
         </div>
       </header>
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -34,8 +34,8 @@ export default function ServicePage() {
           })}
         </div>
         <section className="mt-12 rounded-3xl bg-gradient-to-r from-[#8f463e] to-[#c77b6e] text-white p-8 md:p-10 flex flex-col md:flex-row gap-6 md:items-center justify-between">
-          <div><h2 className="font-heading text-3xl font-bold mb-2">Bring us your formulation brief</h2><p className="text-white/80">Ask about a material, technical document, evaluation sample or commercial lot.</p></div>
-          <Link to="/contact" className="shrink-0 inline-flex items-center gap-2 bg-white text-[#7d3f38] px-6 py-3.5 rounded-xl font-semibold">Contact the ingredient team <ArrowRight size={18} /></Link>
+          <div><h2 className="font-heading text-3xl font-bold mb-2">Bring us your location plan</h2><p className="text-white/80">Tell us about the site, traffic, product mix and rollout target.</p></div>
+          <Link to="/contact" className="shrink-0 inline-flex items-center gap-2 bg-white text-[#bd481b] px-6 py-3.5 rounded-xl font-semibold">Contact the vending team <ArrowRight size={18} /></Link>
         </section>
       </main>
     </div>

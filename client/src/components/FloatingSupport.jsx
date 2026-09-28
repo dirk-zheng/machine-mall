@@ -5,10 +5,10 @@ import { supportAPI, wsClient } from '../api';
 import { useAuth } from '../context/AuthContext';
 
 const quickQuestions = [
-  'What are the MOQ and pack sizes?',
-  'How do evaluation samples work?',
-  'Which technical documents are available?',
-  'What use level and processing guidance apply?',
+  'Which machine fits my location?',
+  'What payment options are available?',
+  'How does remote monitoring work?',
+  'What do I need before installation?',
 ];
 
 const statusCopy = {
@@ -117,11 +117,11 @@ export default function FloatingSupport({ isOpen, onClose }) {
   const waiting = conversation?.status === 'waiting_human';
 
   return (
-    <section className="fixed bottom-[222px] right-3 z-50 flex h-[570px] max-h-[calc(100vh-246px)] w-[calc(100vw-1.5rem)] max-w-[400px] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl sm:right-6" aria-label="Aurelia ingredient support">
+    <section className="fixed bottom-[222px] right-3 z-50 flex h-[570px] max-h-[calc(100vh-246px)] w-[calc(100vw-1.5rem)] max-w-[400px] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl sm:right-6" aria-label="Vendora machine support">
       <header className="flex items-center justify-between bg-gradient-to-r from-primary to-secondary px-4 py-3 text-white">
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20">{humanActive ? <Headphones size={21} /> : <Bot size={21} />}</div>
-          <div><h2 className="text-sm font-bold">{humanActive ? conversation.assignedName : 'Aurelia Ingredient Assistant'}</h2><p className="text-xs text-white/80">{humanActive ? 'Technical Sales Specialist' : waiting ? 'Connecting you with our team' : 'Formulation & supply support'}</p></div>
+          <div><h2 className="text-sm font-bold">{humanActive ? conversation.assignedName : 'Vendora Machine Assistant'}</h2><p className="text-xs text-white/80">{humanActive ? 'Vending Solutions Specialist' : waiting ? 'Connecting you with our team' : 'Machines, payments & deployment'}</p></div>
         </div>
         <button type="button" onClick={onClose} className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/15 hover:bg-white/25" aria-label="Close support chat"><X size={18} /></button>
       </header>

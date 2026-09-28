@@ -11,7 +11,7 @@ export default function NotFound() {
         </div>
         <p className="font-mono text-primary font-bold tracking-widest mb-3">404</p>
         <h1 className="font-heading text-4xl font-bold text-slate-900 mb-4">Page not found</h1>
-        <p className="text-slate-500 leading-relaxed mb-8">The page may have moved, or the address may be incorrect. Return to the Aurelia ingredient portfolio.</p>
+        <p className="text-slate-500 leading-relaxed mb-8">The page may have moved, or the address may be incorrect. Return to the Vendora machine lineup.</p>
         <Link to="/" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-white font-semibold hover:opacity-90 transition-opacity">
           <ArrowLeft size={18} /> Back to Home
         </Link>

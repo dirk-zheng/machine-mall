@@ -6,10 +6,10 @@ import {
 } from 'lucide-react';
 
 const categories = [
-  { id: 'all', label: 'All technical resources', icon: BookOpen },
-  { id: 'active ingredients', label: 'Active Ingredients', icon: FlaskConical },
-  { id: 'botanical extracts', label: 'Botanical Extracts', icon: Leaf },
-  { id: 'quality', label: 'Quality & Documentation', icon: FileCheck2 },
+  { id: 'all', label: 'All operator resources', icon: BookOpen },
+  { id: 'deployment', label: 'Deployment', icon: FlaskConical },
+  { id: 'payments', label: 'Payments', icon: Leaf },
+  { id: 'operations', label: 'Operations', icon: FileCheck2 },
 ];
 
 const categoryById = Object.fromEntries(categories.map((category) => {
@@ -76,8 +76,8 @@ export default function NewsBlog({ initialArticles = [] }) {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-24">
           <div className="max-w-3xl animate-slide-up">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-orange-400/20 bg-orange-400/10 text-orange-200 text-sm mb-6"><BookOpen size={15} />Formulation Resources</div>
-            <h1 className="font-heading text-4xl md:text-6xl font-bold leading-tight mb-5">Practical notes for<br />the formulation bench.</h1>
-            <p className="text-lg text-slate-300 leading-relaxed max-w-2xl">Technical guidance on cosmetic ingredients, incorporation, qualification, documentation and scale-up decisions.</p>
+            <h1 className="font-heading text-4xl md:text-6xl font-bold leading-tight mb-5">Practical notes for<br />the vending floor.</h1>
+            <p className="text-lg text-slate-300 leading-relaxed max-w-2xl">Operator guidance on site planning, payments, assortment, replenishment and connected fleet decisions.</p>
           </div>
         </div>
       </section>
@@ -86,7 +86,7 @@ export default function NewsBlog({ initialArticles = [] }) {
         {featured && (
           <section className="grid lg:grid-cols-[1.3fr_.7fr] gap-8 bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm mb-14">
             <div className="relative min-h-[320px] overflow-hidden">
-              <img src={featured.image || '/ingredients/hero-ingredients.png'} alt={featured.title} className="absolute inset-0 w-full h-full object-cover" width="900" height="560" />
+              <img src={featured.image || '/vending/hero-vending-machine.png'} alt={featured.title} className="absolute inset-0 w-full h-full object-cover" width="900" height="560" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
             </div>
             <div className="p-8 md:p-10 flex flex-col justify-center">
@@ -104,7 +104,7 @@ export default function NewsBlog({ initialArticles = [] }) {
 
         <section aria-labelledby="latest-insights">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
-            <div><p className="text-primary font-semibold text-sm uppercase tracking-wider mb-2">Technical library</p><h2 id="latest-insights" className="font-heading text-3xl font-bold text-slate-900">Latest ingredient insights</h2></div>
+            <div><p className="text-primary font-semibold text-sm uppercase tracking-wider mb-2">Operator library</p><h2 id="latest-insights" className="font-heading text-3xl font-bold text-slate-900">Latest vending insights</h2></div>
             <label className="relative block w-full lg:w-80">
               <span className="sr-only">Search articles</span><Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
               <input value={query} onChange={(event) => {
@@ -134,7 +134,7 @@ export default function NewsBlog({ initialArticles = [] }) {
                 return (
                   <article key={article.id} className="group bg-white rounded-2xl border border-slate-200 overflow-hidden hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-200/70 transition-all duration-300">
                     <div className="relative aspect-[16/10] overflow-hidden bg-slate-100">
-                      <img src={article.image || '/ingredients/hero-ingredients.png'} alt={article.title} loading="lazy" width="640" height="400" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      <img src={article.image || '/vending/hero-vending-machine.png'} alt={article.title} loading="lazy" width="640" height="400" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                       <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/95 text-xs font-semibold text-slate-700 shadow-sm"><Tag size={12} className="text-primary" />{category.label}</span>
                     </div>
                     <div className="p-6">
@@ -153,7 +153,7 @@ export default function NewsBlog({ initialArticles = [] }) {
         </section>
 
         <section className="mt-16 rounded-3xl bg-gradient-to-br from-orange-600 to-amber-500 p-8 md:p-12 text-white flex flex-col md:flex-row md:items-center justify-between gap-8">
-          <div className="max-w-2xl"><div className="flex items-center gap-2 text-orange-100 text-sm font-medium mb-3"><CheckCircle2 size={17} />Qualifying a cosmetic raw material?</div><h2 className="font-heading text-3xl font-bold mb-3">Review the questions technical teams ask most.</h2><p className="text-orange-50/90">Specifications, TDS, SDS, COA, samples, use levels, MOQ, lead time and lot traceability.</p></div>
+          <div className="max-w-2xl"><div className="flex items-center gap-2 text-orange-100 text-sm font-medium mb-3"><CheckCircle2 size={17} />Planning a machine rollout?</div><h2 className="font-heading text-3xl font-bold mb-3">Review the questions operators ask most.</h2><p className="text-orange-50/90">Capacity, cooling, payment setup, connectivity, site access, lead time and service coverage.</p></div>
           <Link to="/faq" className="shrink-0 inline-flex items-center justify-center gap-2 bg-white text-orange-700 px-6 py-3.5 rounded-xl font-semibold hover:bg-orange-50 transition-colors">Browse FAQ <ArrowRight size={18} /></Link>
         </section>
       </main>

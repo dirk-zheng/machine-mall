@@ -51,7 +51,7 @@ export default function SEOManager({ faqs = [], articles = [] }) {
     upsertMeta('meta[property="og:description"]', { property: 'og:description', content: seo.description });
     upsertMeta('meta[property="og:type"]', { property: 'og:type', content: seo.type });
     upsertMeta('meta[property="og:image"]', { property: 'og:image', content: imageUrl });
-    upsertMeta('meta[property="og:site_name"]', { property: 'og:site_name', content: 'Aurelia Ingredients' });
+    upsertMeta('meta[property="og:site_name"]', { property: 'og:site_name', content: 'Vendora Systems' });
     upsertMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' });
     upsertMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: seo.title });
     upsertMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: seo.description });

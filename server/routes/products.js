@@ -113,7 +113,7 @@ router.post('/', authenticateToken, requireAdmin, (req, res) => {
     if (!name || name.length < 2 || name.length > 100) {
       errors.push('Product name must be 2-100 characters');
     }
-    if (!category || !['active-ingredients', 'botanical-extracts', 'functional-materials'].includes(category)) {
+    if (!category || !['snack-drink', 'fresh-food', 'specialty'].includes(category)) {
       errors.push('Please select a valid product category');
     }
     if (!image) {
@@ -174,7 +174,7 @@ router.put('/:id', authenticateToken, requireAdmin, (req, res) => {
     if (!name || name.length < 2 || name.length > 100) {
       errors.push('Product name must be 2-100 characters');
     }
-    if (!category || !['active-ingredients', 'botanical-extracts', 'functional-materials'].includes(category)) {
+    if (!category || !['snack-drink', 'fresh-food', 'specialty'].includes(category)) {
       errors.push('Please select a valid product category');
     }
     if (!image) {

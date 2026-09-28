@@ -12,7 +12,7 @@ const faqsFile = path.join(projectRoot, 'server', 'data', 'faqs.json');
 const articlesFile = path.join(projectRoot, 'server', 'data', 'articles.json');
 const mode = process.env.NODE_ENV || 'production';
 const env = loadEnv(mode, clientRoot, '');
-const siteUrl = (process.env.SITE_URL || env.VITE_SITE_URL || 'https://www.aureliabeauty.com').replace(/\/$/, '');
+const siteUrl = (process.env.SITE_URL || env.VITE_SITE_URL || 'https://www.vendorasystems.com').replace(/\/$/, '');
 
 const escapeHtml = (value) => {
                      //seo:处理SEO相关回调
@@ -40,7 +40,7 @@ function buildSeoTags(seo, structuredData) {
     `<meta property="og:type" content="${escapeHtml(seo.type)}">`,
     canonicalUrl ? `<meta property="og:url" content="${escapeHtml(canonicalUrl)}">` : '',
     `<meta property="og:image" content="${escapeHtml(imageUrl)}">`,
-    '<meta property="og:site_name" content="Aurelia Ingredients">',
+    '<meta property="og:site_name" content="Vendora Systems">',
     '<meta name="twitter:card" content="summary_large_image">',
     `<meta name="twitter:title" content="${escapeHtml(seo.title)}">`,
     `<meta name="twitter:description" content="${escapeHtml(seo.description)}">`,

@@ -4,14 +4,14 @@ import { useStore } from '../context/StoreContext';
 import { categories, categoryNames } from '../data/products';
 
 const categoryIcons = {
-  'active-ingredients': Sparkles,
+  'snack-drink': Sparkles,
   'botanical-extracts': Sparkles,
   'functional-materials': Package,
 };
 
 const initialForm = {
   name: '',
-  category: 'active-ingredients',
+  category: 'snack-drink',
   moq: '',
   leadTime: '',
   inci: '',
@@ -169,7 +169,7 @@ export default function Admin() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="font-heading text-3xl font-bold text-dark-900">Product Management</h1>
-            <p className="text-dark-500 mt-1">Manage cosmetic raw materials, technical parameters and supply information</p>
+            <p className="text-dark-500 mt-1">Manage vending machines, configurations and deployment information</p>
           </div>
           <button
             onClick={openAddModal}
@@ -353,10 +353,10 @@ export default function Admin() {
               </div>
 
               <div className="grid md:grid-cols-2 gap-4">
-                <label className="block"><span className="block text-sm font-medium mb-2 text-dark-700">INCI</span><input value={form.inci} onChange={(e) => setForm({ ...form, inci: e.target.value })} placeholder="e.g. Niacinamide" className="w-full px-4 py-3 rounded-xl bg-white border border-dark-200 focus:border-primary focus:ring-2 focus:ring-primary/10" /></label>
-                <label className="block"><span className="block text-sm font-medium mb-2 text-dark-700">Recommended use level</span><input value={form.recommendedUse} onChange={(e) => setForm({ ...form, recommendedUse: e.target.value })} placeholder="e.g. 2–5%" className="w-full px-4 py-3 rounded-xl bg-white border border-dark-200 focus:border-primary focus:ring-2 focus:ring-primary/10" /></label>
-                <label className="block"><span className="block text-sm font-medium mb-2 text-dark-700">Solubility / phase</span><input value={form.solubility} onChange={(e) => setForm({ ...form, solubility: e.target.value })} placeholder="e.g. Water soluble" className="w-full px-4 py-3 rounded-xl bg-white border border-dark-200 focus:border-primary focus:ring-2 focus:ring-primary/10" /></label>
-                <label className="block"><span className="block text-sm font-medium mb-2 text-dark-700">Commercial pack sizes</span><input value={form.sizes} onChange={(e) => setForm({ ...form, sizes: e.target.value })} placeholder="e.g. 1 kg · 5 kg · 25 kg" className="w-full px-4 py-3 rounded-xl bg-white border border-dark-200 focus:border-primary focus:ring-2 focus:ring-primary/10" /></label>
+                <label className="block"><span className="block text-sm font-medium mb-2 text-dark-700">Capacity</span><input value={form.inci} onChange={(e) => setForm({ ...form, inci: e.target.value })} placeholder="e.g. 60 selections · 700 items" className="w-full px-4 py-3 rounded-xl bg-white border border-dark-200 focus:border-primary focus:ring-2 focus:ring-primary/10" /></label>
+                <label className="block"><span className="block text-sm font-medium mb-2 text-dark-700">Best for</span><input value={form.recommendedUse} onChange={(e) => setForm({ ...form, recommendedUse: e.target.value })} placeholder="e.g. offices and campuses" className="w-full px-4 py-3 rounded-xl bg-white border border-dark-200 focus:border-primary focus:ring-2 focus:ring-primary/10" /></label>
+                <label className="block"><span className="block text-sm font-medium mb-2 text-dark-700">Temperature / cooling</span><input value={form.solubility} onChange={(e) => setForm({ ...form, solubility: e.target.value })} placeholder="e.g. 2–8°C refrigeration" className="w-full px-4 py-3 rounded-xl bg-white border border-dark-200 focus:border-primary focus:ring-2 focus:ring-primary/10" /></label>
+                <label className="block"><span className="block text-sm font-medium mb-2 text-dark-700">Machine dimensions</span><input value={form.sizes} onChange={(e) => setForm({ ...form, sizes: e.target.value })} placeholder="e.g. 1830 × 1180 × 850 mm" className="w-full px-4 py-3 rounded-xl bg-white border border-dark-200 focus:border-primary focus:ring-2 focus:ring-primary/10" /></label>
                 <label className="block"><span className="block text-sm font-medium mb-2 text-dark-700">Primary function</span><input value={form.benefit} onChange={(e) => setForm({ ...form, benefit: e.target.value })} placeholder="e.g. Tone + barrier support" className="w-full px-4 py-3 rounded-xl bg-white border border-dark-200 focus:border-primary focus:ring-2 focus:ring-primary/10" /></label>
                 <label className="block"><span className="block text-sm font-medium mb-2 text-dark-700">Portfolio badge</span><input value={form.badge} onChange={(e) => setForm({ ...form, badge: e.target.value })} placeholder="e.g. High purity" className="w-full px-4 py-3 rounded-xl bg-white border border-dark-200 focus:border-primary focus:ring-2 focus:ring-primary/10" /></label>
               </div>
@@ -419,7 +419,7 @@ export default function Admin() {
 
               <div>
                 <label className="block text-sm font-medium mb-2 text-dark-700">Gallery image URLs</label>
-                <textarea value={form.galleryText} onChange={(e) => setForm({ ...form, galleryText: e.target.value })} placeholder={'One image URL per line\n/ingredients/material-main.png\n/ingredients/material-detail.png'} rows={4} className="w-full px-4 py-3 rounded-xl bg-white border border-dark-200 focus:border-primary focus:ring-2 focus:ring-primary/10" />
+                <textarea value={form.galleryText} onChange={(e) => setForm({ ...form, galleryText: e.target.value })} placeholder={'One image URL per line\n/vending/hero-vending-machine.png\n/vending/beverage-machine.png'} rows={4} className="w-full px-4 py-3 rounded-xl bg-white border border-dark-200 focus:border-primary focus:ring-2 focus:ring-primary/10" />
                 <p className="mt-1 text-xs text-dark-500">The first image is shown as the default detail image. Keep the primary image URL in this list.</p>
               </div>
 
@@ -431,7 +431,7 @@ export default function Admin() {
                               //处理页面交互事件
                               return setForm({ ...form, description: e.target.value });
                             }}
-                  placeholder="Describe the cosmetic raw material, grade and formulation role..."
+                  placeholder="Describe the vending machine, capacity and deployment fit..."
                   rows={3}
                   className={`w-full px-4 py-3 rounded-xl bg-white border ${errors.description ? 'border-red-500' : 'border-dark-200'} focus:border-primary focus:ring-2 focus:ring-primary/10 resize-none`}
                 />
@@ -439,8 +439,8 @@ export default function Admin() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2 text-dark-700">Typical applications &amp; handling</label>
-                <textarea value={form.applications} onChange={(e) => setForm({ ...form, applications: e.target.value })} placeholder="Applications, incorporation phase, process, pH or dispersion guidance" rows={3} className="w-full px-4 py-3 rounded-xl bg-white border border-dark-200 focus:border-primary focus:ring-2 focus:ring-primary/10 resize-none" />
+                <label className="block text-sm font-medium mb-2 text-dark-700">Location fit &amp; configuration</label>
+                <textarea value={form.applications} onChange={(e) => setForm({ ...form, applications: e.target.value })} placeholder="Location types, product mix, access, power and configuration guidance" rows={3} className="w-full px-4 py-3 rounded-xl bg-white border border-dark-200 focus:border-primary focus:ring-2 focus:ring-primary/10 resize-none" />
               </div>
 
               <div className="grid md:grid-cols-2 gap-4">

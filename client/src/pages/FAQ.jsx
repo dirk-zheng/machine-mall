@@ -22,7 +22,7 @@ export default function FAQ({ initialFaqs = [] }) {
         setOpen((current) => current || list[0]?.id || null);
         setLoadError('');
       } catch (error) {
-        if (active && initialFaqs.length === 0) setLoadError('FAQ content is temporarily unavailable. Please contact our ingredient team for help.');
+        if (active && initialFaqs.length === 0) setLoadError('FAQ content is temporarily unavailable. Please contact our vending team for help.');
       } finally {
         if (active) setLoading(false);
       }
@@ -39,12 +39,12 @@ export default function FAQ({ initialFaqs = [] }) {
   return (
     <div className="min-h-screen bg-[#fbf8f2] pt-24">
       <section className="bg-[#dfe6df] px-5 py-16 text-center">
-        <p className="text-sm font-bold uppercase tracking-[.2em] text-[#a05247]">Cosmetic ingredient questions</p>
+        <p className="text-sm font-bold uppercase tracking-[.2em] text-[#d95f2b]">Commercial vending questions</p>
         <h1 className="mt-3 font-heading text-5xl font-bold text-[#17251f]">Qualify raw materials with clarity.</h1>
-        <p className="mx-auto mt-4 max-w-2xl text-[#657068]">Answers for formulators and sourcing teams about specifications, documentation, samples, MOQ, lead times and commercial supply.</p>
+        <p className="mx-auto mt-4 max-w-2xl text-[#657068]">Answers for operators and location teams about machines, payments, telemetry, installation, lead times and service.</p>
         <label className="relative mx-auto mt-7 block max-w-xl">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#657068]" />
-          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search COA, TDS, samples, MOQ or lead time" className="w-full rounded-full border-0 bg-white py-4 pl-12 pr-5 shadow-sm" />
+          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search payments, cooling, installation or lead time" className="w-full rounded-full border-0 bg-white py-4 pl-12 pr-5 shadow-sm" />
         </label>
       </section>
       <main className="mx-auto max-w-3xl px-5 py-14">
@@ -64,9 +64,9 @@ export default function FAQ({ initialFaqs = [] }) {
         ))}
         {!loading && !loadError && !faqs.length && <p className="py-20 text-center text-[#657068]">No answers match that search.</p>}
         <section className="mt-12 rounded-3xl bg-[#17251f] p-8 text-center text-white">
-          <h2 className="font-heading text-2xl font-bold">Have a specific formulation brief?</h2>
+          <h2 className="font-heading text-2xl font-bold">Have a specific location in mind?</h2>
           <p className="mt-2 text-sm text-white/60">Send the dosage form, target function, market, volume and documents required.</p>
-          <Link to="/contact" className="mt-5 inline-block rounded-full bg-white px-6 py-3 font-semibold text-[#17251f]">Ask the ingredient team</Link>
+          <Link to="/contact" className="mt-5 inline-block rounded-full bg-white px-6 py-3 font-semibold text-[#17251f]">Ask the vending team</Link>
         </section>
       </main>
     </div>

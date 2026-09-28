@@ -18,7 +18,7 @@ function LegalLayout({ eyebrow, title, children }) {
 
 export function PrivacyPolicy() {
   return <LegalLayout eyebrow="Legal" title="Privacy Policy">
-    <p>This policy explains how {businessConfig.legalName} handles information on this business-to-business cosmetic ingredient website.</p>
+    <p>This policy explains how {businessConfig.legalName} handles information on this business-to-business vending systems website.</p>
     <h2>Information we collect</h2><p>We collect an essential visitor identifier, account and authentication details, business contact information, RFQ specifications, support messages, and technical security logs. Site analytics is allowed by default and may collect page-view and interaction events tied to the visitor identifier unless you turn it off in Privacy Choices.</p>
     <h2>Why we use it</h2><p>We use information to provide accounts, maintain RFQs and support conversations, respond to business inquiries, prevent abuse, secure the service, comply with law, and understand site usage. You can turn optional analytics off at any time.</p>
     <h2>Automated assistant and Lark</h2><p>The chat may first be handled by an automated assistant named Kora and then transferred to a human seller. RFQs, support requests, and messages containing contact details may be sent to our Lark workspace so our sales team can respond. Do not send sensitive personal, payment, government ID, health, or confidential third-party information in chat.</p>
@@ -31,11 +31,11 @@ export function PrivacyPolicy() {
 
 export function TermsOfUse() {
   return <LegalLayout eyebrow="Legal" title="Terms of Use">
-    <p>These terms govern use of the Aurelia Ingredients website. By creating a technical sourcing account or submitting a business inquiry, you confirm you are at least 18 and authorized to act for the business identified.</p>
-    <h2>Business inquiries only</h2><p>The site is intended for professional cosmetic raw-material evaluation, not consumer purchases or medical advice. Specifications, suggested use levels, pack sizes, lead times, pricing and availability are informational until confirmed in a written quotation, approved specification, purchase order acceptance or proforma invoice.</p>
+    <p>These terms govern use of the Vendora Systems website. By creating an account or submitting a business inquiry, you confirm you are at least 18 and authorized to act for the business identified.</p>
+    <h2>Business inquiries only</h2><p>The site is intended for professional vending equipment evaluation, not consumer purchases. Specifications, capacity, dimensions, lead times, pricing and availability are informational until confirmed in a written quotation, purchase order acceptance or proforma invoice.</p>
     <h2>Accounts and acceptable use</h2><p>Provide accurate information, protect account credentials, and promptly report unauthorized use. Do not probe security, automate abusive requests, upload unlawful material, impersonate others, or interfere with the service.</p>
     <h2>Samples, orders, and compliance</h2><p>Samples and production goods may vary within agreed tolerances. Binding specifications, labeling, testing, warranties, payment, shipping, returns, and governing terms must appear in the applicable written sales documents. Buyers remain responsible for confirming intended-market requirements.</p>
-    <h2>Intellectual property and submissions</h2><p>Site content belongs to {businessConfig.legalName} or its licensors. You may use it only to evaluate cosmetic ingredients and a potential supply relationship. You grant us permission to use submitted business and formulation-brief information to evaluate and fulfill your request.</p>
+    <h2>Intellectual property and submissions</h2><p>Site content belongs to {businessConfig.legalName} or its licensors. You may use it only to evaluate vending systems and a potential supply relationship. You grant us permission to use submitted business and deployment information to evaluate and fulfill your request.</p>
     <h2>Disclaimers and liability</h2><p>The website is provided “as is” to the extent permitted by law. We do not promise uninterrupted access or that preliminary content is error-free. Liability is limited to the fullest extent permitted by applicable law; rights that cannot legally be waived remain unaffected.</p>
     <h2>Contact</h2><p>Email <a href={`mailto:${businessConfig.inquiriesEmail}`}>{businessConfig.inquiriesEmail}</a>. Mailing address: {businessConfig.postalAddress}. Final governing-law and venue terms must be confirmed by U.S. counsel before launch.</p>
   </LegalLayout>;

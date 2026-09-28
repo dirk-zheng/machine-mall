@@ -122,7 +122,7 @@ export default function SupportInbox() {
     <div className="min-h-screen bg-slate-50 px-4 pb-10 pt-24 sm:px-6">
       <div className="mx-auto max-w-7xl">
         <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
-          <div><p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Ingredient technical support</p><h1 className="mt-1 font-heading text-3xl font-bold text-slate-900">Ingredient Inquiry Inbox</h1><p className="mt-1 text-sm text-slate-500">Claim raw-material inquiries, keep the bot context and reply as a clearly identified technical sales team member.</p></div>
+          <div><p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Vending deployment support</p><h1 className="mt-1 font-heading text-3xl font-bold text-slate-900">Machine Inquiry Inbox</h1><p className="mt-1 text-sm text-slate-500">Claim deployment inquiries, keep the bot context and reply as a clearly identified vending solutions team member.</p></div>
           <button type="button" onClick={loadQueue} className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-600 hover:border-primary hover:text-primary"><RefreshCw size={16} />Refresh</button>
         </div>
 
