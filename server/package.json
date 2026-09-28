@@ -1,0 +1,25 @@
+{
+  "name": "aurelia-ingredients-server",
+  "version": "1.0.0",
+  "description": "Aurelia Ingredients 美妆原料展示、技术支持与询价后端",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "seed": "node seed.js",
+    "db:install": "node scripts/install-schema.js",
+    "db:migrate-users": "node scripts/migrate-user-json-to-mysql.js",
+    "db:consolidate-visitor-identity": "node scripts/consolidate-visitor-identity.js",
+    "test:identity-support": "node scripts/test-identity-support-flow.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
+    "express": "^4.21.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.14.4",
+    "uuid": "^10.0.0",
+    "ws": "^8.21.0"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "aurelia-ingredients-platform",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "install:all": "cd client && npm install && cd ../server && npm install",
+    "dev": "cd client && npm run dev",
+    "dev:server": "cd server && npm run dev",
+    "dev:all": "concurrently \"npm run dev\" \"npm run dev:server\"",
+    "build": "cd client && npm run build",
+    "preview": "cd client && npm run preview",
+    "check:launch": "cd server && node scripts/check-launch-config.js"
+  }
+}
