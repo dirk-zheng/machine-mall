@@ -1,175 +1,187 @@
-# Ubuntu 服务器部署指南
+# Vendora 自动售卖机网站 Ubuntu 部署指南
 
-本文档适用于本项目的生产环境部署。推荐架构如下：
+本文档适用于将当前项目部署到 Ubuntu 22.04 / 24.04 服务器。
 
-```text
-域名 -> Nginx（HTTPS / WebSocket）-> Node.js:3001 -> MySQL 8
-```
-
-Node.js 服务只监听服务器本机地址，由 Nginx 对外提供 HTTP/HTTPS 服务。前后端使用同一个域名部署最简单，因为前端默认连接当前域名下的 `/api` 和 `/ws`。
-
-## 1. 上线前安全检查
-
-### 1.1 不要将 `.env` 提交到 Git
-
-`server/.env` 中可能包含数据库密码、JWT 密钥和 Lark Webhook。生产部署前，应确认它没有被 Git 跟踪，并将以下规则加入项目根目录的 `.gitignore`：
-
-```gitignore
-.env
-.env.*
-!.env.example
-```
-
-如果 `server/.env` 已被 Git 跟踪，可在本地仓库执行：
-
-```bash
-git rm --cached server/.env
-git commit -m "stop tracking production environment file"
-```
-
-如果包含密钥的 `.env` 曾经上传到远程仓库，应更换其中的数据库密码、JWT 密钥和 Webhook 密钥。仅删除文件不能清除 Git 历史中的旧密钥。
-
-### 1.2 修改固定管理员密码
-
-当前管理员配置位于：
+推荐生产架构：
 
 ```text
-server/config/admin.js
+浏览器
+  ↓ HTTPS / WSS
+Nginx
+  ↓ http://127.0.0.1:3001
+Node.js / Express
+  ├─ React 静态站点：client/dist
+  ├─ REST API：/api
+  ├─ WebSocket：/ws
+  ├─ 产品、FAQ、文章：server/data/*.json
+  └─ 用户、询价、客服数据：MySQL 8
 ```
 
-服务启动时会根据这里的配置创建或同步管理员账号。公开上线前必须修改默认密码，推荐进一步改成从环境变量读取管理员账号和密码。
+示例使用以下占位值，部署时请统一替换：
 
-### 1.3 不使用示例数据库密码
+- 域名：`example.com`
+- 项目目录：`/var/www/vendora`
+- Linux 服务账号：`vendora`
+- systemd 服务名：`vendora`
+- 数据库名：`curva_denim_b2b`
 
-不要在生产环境直接使用 `server/sql/create.sql` 中的示例用户和密码。应按照本文后续步骤手动创建独立数据库用户。
+> 数据库名是项目保留的历史兼容标识。除非同时修改 SQL、服务端配置和已有数据，否则不要直接改名。
 
-## 2. 服务器要求
+## 1. 服务器准备
 
-推荐环境：
-
-- Ubuntu 22.04 或 Ubuntu 24.04
-- Node.js 20 LTS 或更高版本
-- MySQL 8
-- Nginx
-- 至少 1 GB 内存；建议 2 GB 或以上
-
-更新系统并安装基础软件：
+建议配置：2 核 CPU、2 GB 内存、20 GB 磁盘。
 
 ```bash
 sudo apt update
 sudo apt upgrade -y
-sudo apt install -y nginx mysql-server git curl
+sudo apt install -y nginx mysql-server git curl build-essential
 ```
 
-确认 Node.js 与 npm 版本：
+安装 Node.js 20 LTS：
 
 ```bash
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs
 node --version
 npm --version
 ```
 
-如果 Node.js 低于 20，请先通过 NodeSource、nvm 或服务器管理面板安装 Node.js 20 LTS。
+Node.js 应为 20.x 或更高版本。
 
-## 3. 上传项目
-
-以下示例将项目部署到 `/var/www/aurelia`：
+创建独立服务账号：
 
 ```bash
-sudo mkdir -p /var/www/aurelia
-sudo chown -R "$USER":"$USER" /var/www/aurelia
-git clone <你的仓库地址> /var/www/aurelia
-cd /var/www/aurelia
+sudo adduser --system --group --home /var/www/vendora vendora
 ```
 
-也可以在本地构建后通过 `rsync`、SFTP 或服务器管理面板上传。
+## 2. 上传项目
 
-## 4. 安装项目依赖
+通过 Git 部署：
+
+```bash
+sudo git clone <你的仓库地址> /var/www/vendora
+sudo chown -R vendora:vendora /var/www/vendora
+```
+
+如果使用 SFTP、SCP 或服务器面板上传，请确保最终目录结构如下：
+
+```text
+/var/www/vendora/
+├── client/
+├── server/
+├── package.json
+└── DEPLOY-UBUNTU.md
+```
+
+不要上传本地的 `node_modules`、`client/dist` 或包含生产密码的 `.env`。
+
+## 3. 安装依赖并构建前端
 
 安装服务端生产依赖：
 
 ```bash
-cd /var/www/aurelia/server
-npm ci --omit=dev
+cd /var/www/vendora/server
+sudo -u vendora npm ci --omit=dev
 ```
 
-如果要让 Node.js 同时提供前端页面，还需要安装前端依赖并构建：
+安装前端依赖：
 
 ```bash
-cd /var/www/aurelia/client
-npm ci
-npm run build
+cd /var/www/vendora/client
+sudo -u vendora npm ci
 ```
 
-生产模式下，服务端会自动读取并托管：
+创建前端生产环境文件：
 
-```text
-client/dist
+```bash
+sudo -u vendora nano /var/www/vendora/client/.env.production.local
 ```
 
-如果该目录不存在，服务端仍可提供 API 和 WebSocket，但不会提供完整前端页面。
-
-### 4.1 前端生产环境变量
-
-构建前可以创建 `/var/www/aurelia/client/.env.production.local`：
+写入：
 
 ```dotenv
 VITE_SITE_URL=https://example.com
-VITE_LEGAL_BUSINESS_NAME=你的公司名称
-VITE_BUSINESS_POSTAL_ADDRESS=你的公司地址
+VITE_LEGAL_BUSINESS_NAME=Vendora Systems
+VITE_BUSINESS_POSTAL_ADDRESS="你的公司地址"
 VITE_PRIVACY_EMAIL=privacy@example.com
 VITE_INQUIRIES_EMAIL=sales@example.com
 ```
 
-然后重新构建：
+构建前端及 SEO 预渲染页面：
 
 ```bash
-cd /var/www/aurelia/client
-npm run build
+cd /var/www/vendora/client
+sudo -u vendora npm run build
 ```
 
-所有 `VITE_` 开头的变量都会写入浏览器端构建产物，不能在其中保存密码、Token 或其他秘密。
+构建成功后应生成：
 
-## 5. 配置 MySQL
+```text
+/var/www/vendora/client/dist
+```
 
-启动并设置 MySQL 开机自启：
+所有 `VITE_` 开头的变量都会进入浏览器构建产物，不要在其中存放密码、Token 或数据库凭据。
+
+## 4. 配置 MySQL 8
+
+启动 MySQL：
 
 ```bash
 sudo systemctl enable --now mysql
 sudo systemctl status mysql
 ```
 
-进入 MySQL：
+进入数据库控制台：
 
 ```bash
 sudo mysql
 ```
 
-创建数据库和专用用户。请将示例密码替换为足够长的随机密码：
+创建数据库用户。请把示例密码替换为随机强密码：
 
 ```sql
-CREATE DATABASE curva_denim_b2b
+CREATE DATABASE IF NOT EXISTS curva_denim_b2b
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_0900_ai_ci;
 
-CREATE USER 'aurelia_app'@'localhost'
-  IDENTIFIED BY '替换成很长的随机数据库密码';
+CREATE USER 'vendora_app'@'localhost'
+  IDENTIFIED BY '替换成强随机数据库密码';
 
-GRANT ALL PRIVILEGES ON curva_denim_b2b.* TO 'aurelia_app'@'localhost';
+GRANT ALL PRIVILEGES ON curva_denim_b2b.*
+  TO 'vendora_app'@'localhost';
+
 FLUSH PRIVILEGES;
 EXIT;
 ```
 
-导入项目表结构：
+导入表结构：
 
 ```bash
-sudo mysql < /var/www/aurelia/server/sql/schema.sql
+sudo mysql < /var/www/vendora/server/sql/schema.sql
 ```
 
-项目表结构使用 `utf8mb4_0900_ai_ci`，因此推荐使用 MySQL 8。旧版 MySQL 或部分 MariaDB 版本可能不支持该排序规则。
+验证：
 
-## 6. 配置服务端环境变量
+```bash
+mysql -h 127.0.0.1 -u vendora_app -p curva_denim_b2b
+```
 
-创建 `/var/www/aurelia/server/.env`：
+进入 MySQL 后执行：
+
+```sql
+SHOW TABLES;
+EXIT;
+```
+
+## 5. 配置服务端环境变量
+
+创建生产环境文件：
+
+```bash
+sudo -u vendora nano /var/www/vendora/server/.env
+```
+
+推荐配置：
 
 ```dotenv
 HOST=127.0.0.1
@@ -179,7 +191,7 @@ NODE_ENV=production
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_NAME=curva_denim_b2b
-DB_USER=aurelia_app
+DB_USER=vendora_app
 DB_PASSWORD=替换成数据库密码
 DB_POOL_SIZE=10
 DB_AUTO_SCHEMA=false
@@ -188,8 +200,8 @@ JWT_SECRET=替换成至少32字符的随机字符串
 CORS_ORIGINS=https://example.com,https://www.example.com
 TRUST_PROXY=loopback
 
-LEGAL_BUSINESS_NAME="你的公司法定名称"
-BUSINESS_POSTAL_ADDRESS="你的业务邮寄地址"
+LEGAL_BUSINESS_NAME="Vendora Systems"
+BUSINESS_POSTAL_ADDRESS="你的公司地址"
 PRIVACY_REQUEST_OWNER=privacy@example.com
 INCIDENT_RESPONSE_EMAIL=security@example.com
 PRODUCT_COMPLIANCE_OWNER=compliance@example.com
@@ -200,7 +212,7 @@ LARK_WEBHOOK_SECRET=
 LARK_REQUEST_TIMEOUT_MS=8000
 ```
 
-生成随机 JWT 密钥：
+生成 JWT 密钥：
 
 ```bash
 openssl rand -hex 32
@@ -209,111 +221,133 @@ openssl rand -hex 32
 限制环境文件权限：
 
 ```bash
-chmod 600 /var/www/aurelia/server/.env
+sudo chown vendora:vendora /var/www/vendora/server/.env
+sudo chmod 600 /var/www/vendora/server/.env
 ```
 
-注意事项：
+生产环境注意事项：
 
-- `HOST` 推荐设为 `127.0.0.1`，避免 3001 端口直接暴露公网。
-- `CORS_ORIGINS` 必须填写实际 HTTPS 域名，多个域名用英文逗号分隔，不能填写 `*`。
-- 如果域名只有 `example.com`，可以只填写一个来源。
-- 如果启用 Lark 通知，需要填写国际版 Lark 机器人 Webhook 和签名密钥。
-- 当前 `npm run check:launch` 检查脚本会要求提供 Lark 配置，即使通知已关闭。不使用 Lark 时，可通过健康检查和服务日志验证实际启动状态。
+- `HOST` 使用 `127.0.0.1`，避免 Node.js 的 3001 端口暴露公网。
+- `CORS_ORIGINS` 必须填写真实 HTTPS 域名，不要使用 `*`。
+- 多个域名使用英文逗号分隔。
+- `JWT_SECRET` 必须至少 32 个字符。
+- 不使用 Lark 通知时，应设置 `LARK_NOTIFICATIONS_ENABLED=false`。
+- `npm run check:launch` 当前仍会要求 Lark Webhook；未启用 Lark 时以服务启动日志和 `/api/health` 为准。
+
+## 6. JSON 数据目录权限
+
+产品、FAQ 和文章目前保存在：
+
+```text
+server/data/products.json
+server/data/faqs.json
+server/data/articles.json
+```
+
+后台管理页面会直接修改这些文件，因此运行 Node.js 的 `vendora` 用户必须拥有写权限：
+
+```bash
+sudo chown -R vendora:vendora /var/www/vendora/server/data
+sudo find /var/www/vendora/server/data -type d -exec chmod 750 {} \;
+sudo find /var/www/vendora/server/data -type f -exec chmod 640 {} \;
+```
+
+如果生产环境会通过后台编辑产品或内容，更新代码前必须备份 `server/data`，避免 `git pull` 与线上修改发生冲突。
 
 ## 7. 首次启动测试
 
-先直接启动服务，确认数据库和环境变量配置正确：
+前台运行一次服务：
 
 ```bash
-cd /var/www/aurelia/server
-npm start
+cd /var/www/vendora/server
+sudo -u vendora npm start
 ```
 
-在另一个终端检查：
+在另一个 SSH 窗口检查：
 
 ```bash
 curl http://127.0.0.1:3001/api/health
+curl "http://127.0.0.1:3001/api/products?pageSize=100"
 ```
 
-正常响应类似：
+健康检查应包含：
 
 ```json
 {
   "status": "ok",
   "database": {
     "connected": true,
-    "engine": "mysql",
-    "scope": "user-data-only",
-    "error": null
+    "engine": "mysql"
   }
 }
 ```
 
-测试完成后按 `Ctrl+C` 停止服务，再配置 systemd。
+测试结束后按 `Ctrl+C` 停止前台服务。
 
 ## 8. 使用 systemd 常驻运行
 
-确认 Node.js 的绝对路径：
+确认 Node.js 路径：
 
 ```bash
 which node
 ```
 
-一般会返回 `/usr/bin/node`。如果返回其他路径，需要同步修改下面的 `ExecStart`。
-
-创建 systemd 服务：
+创建服务文件：
 
 ```bash
-sudo nano /etc/systemd/system/aurelia.service
+sudo nano /etc/systemd/system/vendora.service
 ```
 
-写入以下内容，将 `User` 改成实际部署用户：
+写入：
 
 ```ini
 [Unit]
-Description=Aurelia Ingredients Node Server
+Description=Vendora Custom Vending Website
 After=network.target mysql.service
 Requires=mysql.service
 
 [Service]
 Type=simple
-User=ubuntu
-WorkingDirectory=/var/www/aurelia/server
-EnvironmentFile=/var/www/aurelia/server/.env
-ExecStart=/usr/bin/node /var/www/aurelia/server/index.js
+User=vendora
+Group=vendora
+WorkingDirectory=/var/www/vendora/server
+EnvironmentFile=/var/www/vendora/server/.env
+ExecStart=/usr/bin/node /var/www/vendora/server/index.js
 Restart=always
 RestartSec=5
 TimeoutStopSec=20
 KillSignal=SIGTERM
 
+# 基础安全限制
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ReadWritePaths=/var/www/vendora/server/data
+
 [Install]
 WantedBy=multi-user.target
 ```
 
-启动服务并设置开机自启：
+如果 `which node` 返回的不是 `/usr/bin/node`，请修改 `ExecStart`。
+
+启动并设置开机自启：
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable --now aurelia
-sudo systemctl status aurelia
+sudo systemctl enable --now vendora
+sudo systemctl status vendora
 ```
 
-实时查看日志：
+查看日志：
 
 ```bash
-sudo journalctl -u aurelia -f
+sudo journalctl -u vendora -f
 ```
 
-查看最近 100 行日志：
+查看最近 100 行：
 
 ```bash
-sudo journalctl -u aurelia -n 100 --no-pager
-```
-
-修改 `.env` 或更新代码后，需要重启服务：
-
-```bash
-sudo systemctl restart aurelia
+sudo journalctl -u vendora -n 100 --no-pager
 ```
 
 ## 9. 配置 Nginx
@@ -321,10 +355,10 @@ sudo systemctl restart aurelia
 创建站点配置：
 
 ```bash
-sudo nano /etc/nginx/sites-available/aurelia
+sudo nano /etc/nginx/sites-available/vendora
 ```
 
-写入以下内容，并将域名替换为实际域名：
+写入：
 
 ```nginx
 server {
@@ -335,29 +369,29 @@ server {
 
     client_max_body_size 2m;
 
+    # WebSocket 客服与实时消息
     location /ws {
         proxy_pass http://127.0.0.1:3001;
         proxy_http_version 1.1;
-
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
-
         proxy_read_timeout 3600s;
         proxy_send_timeout 3600s;
     }
 
+    # React 页面、静态资源和 REST API 都由 Node.js 提供
     location / {
         proxy_pass http://127.0.0.1:3001;
         proxy_http_version 1.1;
-
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 60s;
     }
 }
 ```
@@ -365,12 +399,12 @@ server {
 启用站点：
 
 ```bash
-sudo ln -s /etc/nginx/sites-available/aurelia /etc/nginx/sites-enabled/aurelia
+sudo ln -s /etc/nginx/sites-available/vendora /etc/nginx/sites-enabled/vendora
 sudo nginx -t
 sudo systemctl reload nginx
 ```
 
-如果默认站点与新站点冲突，可以移除默认站点链接：
+如果默认站点产生冲突，可移除默认站点链接：
 
 ```bash
 sudo rm /etc/nginx/sites-enabled/default
@@ -378,29 +412,29 @@ sudo nginx -t
 sudo systemctl reload nginx
 ```
 
-## 10. 配置 HTTPS
+## 10. 配置域名与 HTTPS
 
-先在域名服务商处将域名的 A 记录指向服务器公网 IP。确认 DNS 生效后安装 Certbot：
+先将域名的 A 记录指向服务器公网 IP。DNS 生效后安装 Certbot：
 
 ```bash
 sudo apt install -y certbot python3-certbot-nginx
 ```
 
-申请并自动配置证书：
+申请证书：
 
 ```bash
 sudo certbot --nginx -d example.com -d www.example.com
 ```
 
-检查证书自动续期：
+验证自动续期：
 
 ```bash
 sudo certbot renew --dry-run
 ```
 
-启用 HTTPS 后，前端会自动通过 `wss://example.com/ws` 连接 WebSocket。
+启用 HTTPS 后，前端会自动通过同域名的 `wss://example.com/ws` 连接 WebSocket。
 
-## 11. 配置防火墙
+## 11. 防火墙
 
 只开放 SSH、HTTP 和 HTTPS：
 
@@ -411,126 +445,177 @@ sudo ufw enable
 sudo ufw status
 ```
 
-不要向公网开放以下端口：
+不要向公网开放：
 
 - `3001`：Node.js 内部服务端口
 - `3306`：MySQL 数据库端口
 
-## 12. 部署验证
+## 12. 部署验证清单
 
-检查 systemd：
-
-```bash
-sudo systemctl status aurelia
-```
-
-检查 Nginx：
+服务状态：
 
 ```bash
-sudo nginx -t
+sudo systemctl status vendora
 sudo systemctl status nginx
+sudo nginx -t
 ```
 
-检查 HTTPS API：
+接口验证：
 
 ```bash
 curl https://example.com/api/health
+curl "https://example.com/api/products?pageSize=100"
 ```
 
-还应在浏览器中验证：
+浏览器验证：
 
-- 首页能够正常打开。
-- `/products` 等前端路由刷新后不会返回 Nginx 404。
-- 登录、询价和客服功能正常。
-- 浏览器开发者工具中 `/ws` WebSocket 状态为 `101 Switching Protocols`。
+- 首页和真实售卖机图片正常显示。
+- `/products` 显示全部基础机型。
+- 产品详情页刷新后不会出现 Nginx 404。
+- 定制询价表单能够提交。
+- 登录和管理页面能够访问。
+- 客服 WebSocket 返回 `101 Switching Protocols`。
 - `/api/health` 中 `database.connected` 为 `true`。
+- 页面源代码中的 canonical URL 是正式域名。
 
-## 13. 后续更新
+## 13. 日常更新流程
 
-拉取代码并重新安装依赖：
+先备份在线 JSON 数据和数据库：
 
 ```bash
-cd /var/www/aurelia
-git pull
+sudo -u vendora cp -a /var/www/vendora/server/data /var/www/vendora/server/data.backup
+sudo mkdir -p /var/backups/vendora
+mysqldump -u vendora_app -p curva_denim_b2b | gzip > /var/backups/vendora/database-$(date +%F-%H%M%S).sql.gz
+```
 
-cd server
-npm ci --omit=dev
+更新项目：
 
-cd ../client
-npm ci
-npm run build
+```bash
+cd /var/www/vendora
+sudo -u vendora git pull --ff-only
 
-sudo systemctl restart aurelia
+cd /var/www/vendora/server
+sudo -u vendora npm ci --omit=dev
+
+cd /var/www/vendora/client
+sudo -u vendora npm ci
+sudo -u vendora npm run build
+
+sudo systemctl restart vendora
 curl https://example.com/api/health
 ```
 
-如果本次更新包含数据库结构变化，应先备份数据库，并根据对应迁移说明执行数据库更新。
+如果 `git pull` 提示 `server/data/*.json` 冲突，不要直接覆盖。先保留线上数据副本，再人工合并新增产品、FAQ 或文章。
 
-## 14. 数据库备份
+## 14. 备份与恢复
 
-手动备份：
-
-```bash
-mkdir -p /var/backups/aurelia
-mysqldump -u aurelia_app -p curva_denim_b2b | gzip > /var/backups/aurelia/curva_denim_b2b-$(date +%F-%H%M%S).sql.gz
-```
-
-恢复前应先停止写入，并确认备份文件有效。恢复示例：
+备份数据库：
 
 ```bash
-gunzip -c /var/backups/aurelia/备份文件.sql.gz | mysql -u aurelia_app -p curva_denim_b2b
+sudo mkdir -p /var/backups/vendora
+mysqldump -u vendora_app -p curva_denim_b2b | gzip > /var/backups/vendora/database-$(date +%F-%H%M%S).sql.gz
 ```
 
-生产环境建议通过 cron、云数据库备份或服务器快照建立自动备份，并定期进行恢复演练。
+备份 JSON 内容和产品图片：
+
+```bash
+sudo tar -czf /var/backups/vendora/content-$(date +%F-%H%M%S).tar.gz \
+  -C /var/www/vendora server/data client/public/vending
+```
+
+恢复数据库：
+
+```bash
+gunzip -c /var/backups/vendora/数据库备份文件.sql.gz | mysql -u vendora_app -p curva_denim_b2b
+```
+
+恢复前建议暂停服务：
+
+```bash
+sudo systemctl stop vendora
+# 执行恢复
+sudo systemctl start vendora
+```
 
 ## 15. 常见故障排查
 
-### 服务启动后立即退出
-
-查看日志：
+### 15.1 服务启动失败
 
 ```bash
-sudo journalctl -u aurelia -n 100 --no-pager
+sudo journalctl -u vendora -n 100 --no-pager
 ```
 
 重点检查：
 
-- `NODE_ENV=production` 时是否配置了 `CORS_ORIGINS`。
-- `JWT_SECRET` 是否至少 32 个字符。
-- `DB_USER` 和 `DB_PASSWORD` 是否正确。
-- MySQL 是否已经启动，表结构是否已经导入。
-- systemd 中的 `User`、`WorkingDirectory` 和 Node.js 路径是否正确。
+- `server/.env` 是否存在且服务账号可读。
+- `JWT_SECRET` 是否不少于 32 个字符。
+- `CORS_ORIGINS` 是否为正式 HTTPS 域名。
+- 数据库账号、密码和数据库名是否正确。
+- MySQL 是否运行且表结构已导入。
+- `client/dist` 是否已经构建。
 
-### 返回 502 Bad Gateway
-
-通常表示 Nginx 无法连接 Node.js：
+### 15.2 Nginx 返回 502
 
 ```bash
-sudo systemctl status aurelia
+sudo systemctl status vendora
 curl http://127.0.0.1:3001/api/health
 sudo tail -n 100 /var/log/nginx/error.log
 ```
 
-### WebSocket 无法连接
+### 15.3 页面能打开但 API 失败
+
+```bash
+curl http://127.0.0.1:3001/api/products
+curl https://example.com/api/products
+```
+
+检查 Nginx 是否将 `/` 正确代理到 3001，以及浏览器控制台是否出现 CORS 错误。
+
+### 15.4 WebSocket 无法连接
 
 检查：
 
-- Nginx `/ws` 是否设置了 `Upgrade` 和 `Connection` 请求头。
-- HTTPS 页面是否使用了 `wss://`。
-- 实际域名是否包含在 `CORS_ORIGINS` 中。
-- 修改 `.env` 后是否重启了服务。
+- Nginx `/ws` 是否设置 `Upgrade` 和 `Connection` 请求头。
+- HTTPS 页面是否使用 `wss://`。
+- 域名是否包含在 `CORS_ORIGINS`。
+- 修改 `.env` 后是否执行 `sudo systemctl restart vendora`。
 
-### 数据库显示未连接
+### 15.5 后台无法保存产品或文章
 
-检查 MySQL 登录：
+检查数据目录权限：
 
 ```bash
-mysql -h 127.0.0.1 -u aurelia_app -p curva_denim_b2b
+sudo -u vendora test -w /var/www/vendora/server/data/products.json && echo writable
+sudo ls -la /var/www/vendora/server/data
 ```
 
-进入数据库后可检查表：
+如果不可写：
 
-```sql
-SHOW TABLES;
+```bash
+sudo chown -R vendora:vendora /var/www/vendora/server/data
+sudo chmod 750 /var/www/vendora/server/data
+sudo chmod 640 /var/www/vendora/server/data/*.json
 ```
+
+### 15.6 产品图片显示 404
+
+确认源文件存在并重新构建：
+
+```bash
+ls -la /var/www/vendora/client/public/vending
+cd /var/www/vendora/client
+sudo -u vendora npm run build
+sudo systemctl restart vendora
+```
+
+## 16. 上线前安全检查
+
+- `server/.env` 未提交到 Git。
+- 数据库密码和 JWT 密钥为生产环境独立随机值。
+- 已修改 `server/config/admin.js` 中的默认管理员账号与密码，或改为从环境变量读取。
+- 服务器只开放 22、80、443 端口。
+- MySQL 只监听本机地址。
+- 已配置数据库和 JSON 内容自动备份。
+- 已验证 HTTPS 证书自动续期。
+- 已使用非 root 用户运行 Node.js。
 
