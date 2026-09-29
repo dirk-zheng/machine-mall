@@ -1,27 +1,30 @@
-# U.S. B2B prelaunch gate
+# Vendora 美国 B2B 上线检查
 
-This checklist is operational guidance, not a substitute for advice from U.S. counsel.
+本文是运营检查清单，不能替代美国律师、税务顾问或产品合规专家的意见。
 
-## Implemented in this version
+## 已实现
 
-- Public Privacy Policy, Terms of Use, Privacy Choices, and Privacy Request pages.
-- Just-in-time disclosures on registration, public RFQ, signed-in RFQ, and chat.
-- Essential visitor ID separated from optional page analytics, with a persistent user opt-out.
-- Versioned registration acceptance stored with the visitor-keyed account record.
-- Privacy requests stored in MySQL with an admin-only processing queue and identity-verification status.
-- Explicit production CORS allowlist, security headers, 64 KB request/WebSocket limits, and HTTP/WebSocket rate limits.
-- B2B/18+ representations and automated-assistant/Lark disclosures.
-- Twelve-character minimum for newly registered passwords.
+- Privacy Policy、Terms of Use、Privacy Choices 和 Privacy Request 页面
+- 注册、询盘、RFQ 和客服中的必要披露
+- 访客标识、可选分析偏好和隐私请求队列
+- 生产 CORS 白名单、安全响应头、请求限制和速率限制
+- 管理员、销售和客户权限隔离
 
-## Blocking manual items before public launch
+## 上线前必须人工确认
 
-- Replace legal-name and mailing-address placeholders in both server and client production environments.
-- Have U.S. counsel approve the Privacy Policy, Terms, governing law, venue, warranty, limitation, and sales documents.
-- Assign named owners for privacy requests, security incidents, and cosmetic raw-material compliance; document response procedures.
-- Obtain and retain material-specific specifications, INCI, TDS, SDS, representative and lot-specific COAs, origin and regulatory statements, batch/QC, change-control and traceability records before commercial supply.
-- Ensure customers understand that finished-formula safety, stability, preservation, claims, packaging compatibility and target-market compliance remain subject to their own validation and applicable agreements.
-- Confirm importer of record, Incoterms, tariffs/duties, sanctions screening, state registrations/taxes, and insurance.
-- Add MFA for administrators/sellers and migrate browser JWT storage to secure HttpOnly cookies before handling high-value orders.
-- Configure encrypted backups, restoration testing, log monitoring, dependency scanning, and an incident-response drill.
+- 补充公司法定名称、注册地址、隐私和安全联系人。
+- 由律师审核隐私政策、销售条款、管辖法律、责任限制和质保条款。
+- 为不同机型准备真实且可验证的电气、制冷、支付和安全规格。
+- 确认目标市场所需的电气安全、无线通信、支付、食品温控和无障碍要求。
+- 确认进口主体、Incoterms、关税、制裁筛查、州税和产品责任保险。
+- 为管理员和销售人员增加 MFA，并评估将浏览器 JWT 迁移至安全 HttpOnly Cookie。
+- 配置加密备份、恢复演练、日志监控、依赖扫描和事故响应流程。
+- 确认所有产品图片均为实际机型或明确标注的效果图，不使用与售卖机无关的产品图片。
 
-Run `npm run check:launch` in the production environment. A passing result covers configuration only; it does not certify legal or product compliance.
+生产环境执行：
+
+```bash
+npm run check:launch
+```
+
+配置检查通过不代表法律或产品合规已完成。

@@ -1,7 +1,7 @@
-export const PRIVACY_PREFERENCES_KEY = 'aurelia_privacy_preferences_v1';
-export const VISITOR_ID_KEY = 'aurelia_beauty_guest_id';
-export const SESSION_VISITOR_ID_KEY = 'aurelia_beauty_session_id';
-export const PRIVACY_EVENT = 'aurelia:privacy-change';
+export const PRIVACY_PREFERENCES_KEY = 'vendora_privacy_preferences_v1';
+export const VISITOR_ID_KEY = 'vendora_guest_id';
+export const SESSION_VISITOR_ID_KEY = 'vendora_session_id';
+export const PRIVACY_EVENT = 'vendora:privacy-change';
 
 export const defaultPrivacyPreferences = Object.freeze({
   decided: false,
@@ -45,5 +45,5 @@ export function savePrivacyPreferences({ analytics }) {
 }
 
 export function clearOptionalLocalData() {
-  localStorage.removeItem('aurelia_beauty_support_clicked');
+  localStorage.removeItem('vendora_support_clicked');
 }

@@ -1,7 +1,7 @@
 {
-  "name": "aurelia-ingredients-server",
+  "name": "vendora-systems-server",
   "version": "1.0.0",
-  "description": "Aurelia Ingredients 美妆原料展示、技术支持与询价后端",
+  "description": "Vendora 自动售卖机定制、技术支持与询价后端",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

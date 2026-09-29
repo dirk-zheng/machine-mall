@@ -5,8 +5,8 @@ import { categories, categoryNames } from '../data/products';
 
 const categoryIcons = {
   'snack-drink': Sparkles,
-  'botanical-extracts': Sparkles,
-  'functional-materials': Package,
+  'fresh-food': Package,
+  'specialty': Sparkles,
 };
 
 const initialForm = {
@@ -326,7 +326,7 @@ export default function Admin() {
                               //处理页面交互事件
                               return setForm({ ...form, name: e.target.value });
                             }}
-                  placeholder="e.g. AURE-NIA 99 Niacinamide"
+                  placeholder="e.g. Vendora Combo 700"
                   className={`w-full px-4 py-3 rounded-xl bg-white border ${errors.name ? 'border-red-500' : 'border-dark-200'} focus:border-primary focus:ring-2 focus:ring-primary/10`}
                 />
                 {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}

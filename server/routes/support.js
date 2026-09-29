@@ -11,40 +11,40 @@ const router = express.Router();
 // AI Keyword matching configuration
 const keywordRules = [
   {
-    keywords: ['inci', 'solubility', 'use level', 'dosage', 'disperse', 'formulation', 'formula'],
-    response: 'Formulation Support 🧪\n\nShare the ingredient, dosage form, target function, process and pH range. We can help identify the relevant grade, starting use level and handling guidance.'
+    keywords: ['custom', 'customize', 'oem', 'odm', 'branding', 'wrap', 'logo', 'cabinet'],
+    response: 'Custom Vending Development 🛠️\n\nShare your product dimensions, package weight, capacity target, exterior branding and rollout quantity. We can recommend a base platform and custom engineering scope.'
   },
   {
-    keywords: ['moq', 'minimum order', 'sample', 'quantity', 'pack size', 'trial order'],
-    response: 'Ingredient Samples & Supply 📦\n\nTell us the material, evaluation quantity, annual volume and destination. Sample availability, commercial pack size, MOQ and lead time are confirmed by grade and lot.'
+    keywords: ['moq', 'minimum order', 'prototype', 'sample machine', 'quantity', 'trial order'],
+    response: 'Prototype & Production 📦\n\nTell us the base model, custom functions, prototype quantity, production quantity and destination. MOQ and lead time depend on the approved configuration.'
   },
   {
-    keywords: ['document', 'report', 'customs', 'clearance', 'stability test', 'compatibility test', 'ingredient list', 'compliance'],
-    response: 'Raw-Material Documents 📄\n\nAvailable files may include TDS, SDS, INCI, representative COA and supporting quality or regulatory statements. Requirements are confirmed by material and market.'
+    keywords: ['payment', 'card', 'cashless', 'qr', 'wallet', 'coin', 'badge', 'age verification'],
+    response: 'Payments & Access 💳\n\nMachines can support bank cards, mobile wallets, QR, cash, employee badges, memberships and identity verification. Availability depends on the target market and payment provider.'
   },
   {
     keywords: ['price', 'cost', 'how much', 'cheap', 'discount', 'promotion', 'pricing', 'quote'],
-    response: 'Ingredient Quotation 💰\n\nShare the material or INCI, grade, target market, estimated volume and destination. Pricing follows the confirmed specification, pack size and quantity.'
+    response: 'Custom Machine Quotation 💰\n\nShare the model, product type, dispensing method, cooling, payment, branding, software requirements, quantity and destination. Pricing follows the approved configuration.'
   },
   {
-    keywords: ['shipping', 'delivery', 'logistics', 'transport', 'how long', 'freight', 'tracking'],
-    response: 'Order & Delivery Support 🚢\n\nShipment planning, cartons, commercial documents and delivery coordination follow the confirmed order. Market compliance responsibilities are agreed before production.'
+    keywords: ['cooling', 'refrigeration', 'frozen', 'temperature', 'heat', 'compressor'],
+    response: 'Temperature Configuration ❄️\n\nTell us the required storage range and ambient operating conditions. We can configure ambient, refrigerated, frozen or hot-food systems with remote temperature alerts.'
   },
   {
-    keywords: ['quality', 'damage', 'contamination', 'off-spec', 'inspect', 'inspection', 'qc', 'assay', 'microbiology', 'coa', 'traceability'],
-    response: 'Ingredient Quality Support 🛡️\n\nQualification can cover specification, identity or assay, microbiological limits, representative sample, COA, traceability and change notification.'
+    keywords: ['software', 'api', 'erp', 'telemetry', 'dashboard', 'inventory', 'remote', 'integration'],
+    response: 'Software & Integration 📊\n\nWe can configure machine telemetry, inventory and sales reporting, remote content, alerts, custom UI and API or ERP integration.'
   },
   {
-    keywords: ['payment', 'pay', 'method', 'wire', 'bank', 'credit', 'terms', 'TT', 'LC'],
-    response: 'Order Terms 💳\n\nPayment terms are confirmed clearly in the quotation and proforma invoice for each order. We keep order, QC, loading and document requirements aligned before shipment.'
+    keywords: ['shipping', 'delivery', 'installation', 'logistics', 'transport', 'how long', 'freight', 'tracking'],
+    response: 'Delivery & Installation 🚚\n\nWe plan export packaging, freight, access requirements, installation, commissioning and operator training around the approved machine configuration and destination.'
   }
 ];
 
 // Default fallback replies
 const defaultReplies = [
-  'Thank you for contacting Aurelia Ingredients. Ask about INCI, use levels, samples, documentation, MOQ or pricing.',
-  'Hello! Share your formulation brief, target market, required documents and expected volume.',
-  'Welcome to Aurelia Ingredients. How can we support your raw-material evaluation?'
+  'Thank you for contacting Vendora Systems. Ask about base models, customization, payments, software, MOQ or pricing.',
+  'Hello! Share your product, vending scenario, custom functions, target market and expected quantity.',
+  'Welcome to Vendora Systems. How can we support your custom vending project?'
 ];
 
 // Get AI response based on keywords

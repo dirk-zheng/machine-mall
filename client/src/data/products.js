@@ -8,7 +8,7 @@ export const categories = [
 export const productGroups = [
   { title: 'Snack & Drink', description: 'Reliable ambient and refrigerated machines for offices, campuses and transport hubs.', categories: ['snack-drink'] },
   { title: 'Fresh Food', description: 'Temperature-controlled smart retail for meals, produce and premium grab-and-go.', categories: ['fresh-food'] },
-  { title: 'Specialty Retail', description: 'Flexible lockers and vending platforms for PPE, electronics, beauty and convenience goods.', categories: ['specialty'] },
+  { title: 'Specialty Retail', description: 'Flexible lockers and vending platforms for PPE, electronics, travel essentials and convenience goods.', categories: ['specialty'] },
 ];
 
 export const categoryNames = Object.fromEntries(categories.filter(({ id }) => id !== 'all').map(({ id, name }) => [id, name]));

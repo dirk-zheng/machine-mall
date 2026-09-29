@@ -1,52 +1,40 @@
-# Aurelia Ingredients B2B SEO Strategy
+# Vendora 自动售卖机 SEO 策略
 
-## Positioning
+## 定位
 
-Aurelia Ingredients supplies cosmetic actives, botanical extracts and functional materials to formulators, brands, manufacturers, laboratories and ingredient distributors. Search pages should move qualified technical buyers toward material evaluation, documentation, samples and RFQs.
+Vendora Systems 提供定制自动售卖机、OEM / ODM 硬件、支付集成和远程运营系统。公开页面应引导企业客户选择基础机型、提交定制需求并申请项目报价。
 
-## Primary Search Themes
+## 核心关键词
 
-- cosmetic ingredient supplier
-- cosmetic active ingredients
-- botanical extracts for cosmetic formulation
-- cosmetic raw material samples
-- INCI technical data sheet supplier
-- cosmetic emulsifier and emollient supplier
-- niacinamide cosmetic grade
-- sodium hyaluronate cosmetic ingredient
-- cosmetic ingredient COA TDS SDS
-- low MOQ cosmetic raw materials
+- custom vending machine manufacturer
+- OEM vending machine
+- smart vending machine supplier
+- snack and drink vending machine
+- fresh food vending machine
+- frozen food vending machine
+- coffee vending machine
+- PPE vending machine
+- cashless vending machine
+- vending machine software integration
 
-Avoid unsupported claims about certifications, clinical results, purity, origin, natural content, sustainability, regulatory approval, price or guaranteed delivery.
+## 页面意图
 
-## Route Intent
-
-| Route | Search intent | Primary conversion |
+| 页面 | 搜索意图 | 主要转化 |
 | --- | --- | --- |
-| `/` | Cosmetic ingredient supplier discovery | Explore materials / request sample |
-| `/products` | Compare functions, INCI and formats | Open ingredient detail |
-| `/products/:slug` | Evaluate one raw material | Request sample, document or quote |
-| `/contact` | Contact an ingredient supplier | Submit formulation brief |
-| `/services/formulation-support` | Ingredient selection guidance | Share technical requirements |
-| `/services/sampling-and-supply` | Sample and commercial supply | Request sample / RFQ |
-| `/services/quality-documentation` | Specification and document review | Request technical files |
-| `/news-blog/` | Formulation and qualification education | Read resource / contact team |
-| `/faq` | Technical and commercial qualification | Resolve questions / contact team |
+| `/` | 寻找定制售卖机制造商 | 查看基础机型 / 发起定制 |
+| `/products` | 对比售卖机类型 | 查看机型详情 |
+| `/products/:slug` | 评估具体基础机型 | 申请定制配置 |
+| `/contact` | 提交 OEM / ODM 需求 | 提交项目询盘 |
+| `/services/formulation-support` | 了解定制开发流程 | 提交产品与功能需求 |
+| `/services/sampling-and-supply` | 了解运营和补货 | 咨询系统方案 |
+| `/services/quality-documentation` | 了解硬件和售后 | 咨询技术规格 |
+| `/news-blog/` | 学习选址、支付和运营 | 阅读资源 / 联系团队 |
 
-Account, admin, RFQ and internal support routes remain `noindex`.
+账号、后台、RFQ 和客服工作台保持 `noindex`。
 
-## Metadata and Structured Data
+## 内容原则
 
-- Use `Aurelia Ingredients` as the site and Organization display name.
-- The canonical origin remains configurable through `VITE_SITE_URL` and `SITE_URL`.
-- Product schema should expose INCI, recommended use, solubility, pack sizes, MOQ and lead time.
-- Do not publish `Offer`, public unit pricing or inventory until commercial terms are confirmed.
-- Build FAQ schema only from published FAQs and Article schema from published technical content.
-
-## Content Program
-
-Priority clusters: active incorporation and stability, botanical extract qualification, emulsifier and emollient selection, specification/COA review, sample-to-commercial-lot workflows, and market-specific documentation.
-
-Preferred CTAs: Request Sample & Quote, Request Technical Files, Build an Ingredient RFQ, Discuss a Formulation Brief, Contact Technical Sales.
-
-Avoid consumer language such as Shop Now, Add to Cart, skincare routine, shade edit, fragrance ritual, free shipping or easy returns.
+- 图片必须展示现实世界中的自动售卖机或真实安装场景。
+- 产品数据重点展示容量、适用场景、温度、尺寸、MOQ 和交期。
+- 定制内容重点展示柜体、货道、制冷、外观、支付、软件和系统集成。
+- 未经确认不得承诺认证、交期、价格、支付覆盖范围或特定市场合规。

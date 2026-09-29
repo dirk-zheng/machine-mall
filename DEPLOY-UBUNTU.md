@@ -23,7 +23,7 @@ Node.js / Express
 - 项目目录：`/var/www/vendora`
 - Linux 服务账号：`vendora`
 - systemd 服务名：`vendora`
-- 数据库名：`curva_denim_b2b`
+- 数据库名：`vendora_b2b`
 
 > 数据库名是项目保留的历史兼容标识。除非同时修改 SQL、服务端配置和已有数据，否则不要直接改名。
 
@@ -140,14 +140,14 @@ sudo mysql
 创建数据库用户。请把示例密码替换为随机强密码：
 
 ```sql
-CREATE DATABASE IF NOT EXISTS curva_denim_b2b
+CREATE DATABASE IF NOT EXISTS vendora_b2b
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_0900_ai_ci;
 
 CREATE USER 'vendora_app'@'localhost'
   IDENTIFIED BY '替换成强随机数据库密码';
 
-GRANT ALL PRIVILEGES ON curva_denim_b2b.*
+GRANT ALL PRIVILEGES ON vendora_b2b.*
   TO 'vendora_app'@'localhost';
 
 FLUSH PRIVILEGES;
@@ -163,7 +163,7 @@ sudo mysql < /var/www/vendora/server/sql/schema.sql
 验证：
 
 ```bash
-mysql -h 127.0.0.1 -u vendora_app -p curva_denim_b2b
+mysql -h 127.0.0.1 -u vendora_app -p vendora_b2b
 ```
 
 进入 MySQL 后执行：
@@ -190,7 +190,7 @@ NODE_ENV=production
 
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_NAME=curva_denim_b2b
+DB_NAME=vendora_b2b
 DB_USER=vendora_app
 DB_PASSWORD=替换成数据库密码
 DB_POOL_SIZE=10
@@ -199,6 +199,10 @@ DB_AUTO_SCHEMA=false
 JWT_SECRET=替换成至少32字符的随机字符串
 CORS_ORIGINS=https://example.com,https://www.example.com
 TRUST_PROXY=loopback
+
+ADMIN_ACCOUNT=admin
+ADMIN_PASSWORD=替换成独立的管理员强密码
+ADMIN_NAME="Vendora Systems Admin"
 
 LEGAL_BUSINESS_NAME="Vendora Systems"
 BUSINESS_POSTAL_ADDRESS="你的公司地址"
@@ -231,6 +235,7 @@ sudo chmod 600 /var/www/vendora/server/.env
 - `CORS_ORIGINS` 必须填写真实 HTTPS 域名，不要使用 `*`。
 - 多个域名使用英文逗号分隔。
 - `JWT_SECRET` 必须至少 32 个字符。
+- `ADMIN_PASSWORD` 必须使用独立强密码，不要沿用示例值。
 - 不使用 Lark 通知时，应设置 `LARK_NOTIFICATIONS_ENABLED=false`。
 - `npm run check:launch` 当前仍会要求 Lark Webhook；未启用 Lark 时以服务启动日志和 `/api/health` 为准。
 
@@ -485,7 +490,7 @@ curl "https://example.com/api/products?pageSize=100"
 ```bash
 sudo -u vendora cp -a /var/www/vendora/server/data /var/www/vendora/server/data.backup
 sudo mkdir -p /var/backups/vendora
-mysqldump -u vendora_app -p curva_denim_b2b | gzip > /var/backups/vendora/database-$(date +%F-%H%M%S).sql.gz
+mysqldump -u vendora_app -p vendora_b2b | gzip > /var/backups/vendora/database-$(date +%F-%H%M%S).sql.gz
 ```
 
 更新项目：
@@ -513,7 +518,7 @@ curl https://example.com/api/health
 
 ```bash
 sudo mkdir -p /var/backups/vendora
-mysqldump -u vendora_app -p curva_denim_b2b | gzip > /var/backups/vendora/database-$(date +%F-%H%M%S).sql.gz
+mysqldump -u vendora_app -p vendora_b2b | gzip > /var/backups/vendora/database-$(date +%F-%H%M%S).sql.gz
 ```
 
 备份 JSON 内容和产品图片：
@@ -526,7 +531,7 @@ sudo tar -czf /var/backups/vendora/content-$(date +%F-%H%M%S).tar.gz \
 恢复数据库：
 
 ```bash
-gunzip -c /var/backups/vendora/数据库备份文件.sql.gz | mysql -u vendora_app -p curva_denim_b2b
+gunzip -c /var/backups/vendora/数据库备份文件.sql.gz | mysql -u vendora_app -p vendora_b2b
 ```
 
 恢复前建议暂停服务：
@@ -612,7 +617,7 @@ sudo systemctl restart vendora
 
 - `server/.env` 未提交到 Git。
 - 数据库密码和 JWT 密钥为生产环境独立随机值。
-- 已修改 `server/config/admin.js` 中的默认管理员账号与密码，或改为从环境变量读取。
+- 已通过 `ADMIN_ACCOUNT`、`ADMIN_PASSWORD` 和 `ADMIN_NAME` 配置管理员账号。
 - 服务器只开放 22、80、443 端口。
 - MySQL 只监听本机地址。
 - 已配置数据库和 JSON 内容自动备份。

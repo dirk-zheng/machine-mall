@@ -156,39 +156,39 @@ function buildRfqAssortmentItems(visitorId) {
 // ─── Support (AI) ────────────────────────────────
 const keywordRules = [
   {
-    keywords: ['inci', 'solubility', 'use level', 'dosage', 'disperse', 'formulation', 'formula'],
-    response: 'Formulation Support 🧪\n\nShare the ingredient, dosage form, target function, process and pH range. We can help identify the relevant grade, starting use level and handling guidance.'
+    keywords: ['custom', 'customize', 'oem', 'odm', 'branding', 'wrap', 'logo', 'cabinet'],
+    response: 'Custom Vending Development 🛠️\n\nShare your product dimensions, package weight, capacity target, exterior branding and rollout quantity. We can recommend a base platform and custom engineering scope.'
   },
   {
-    keywords: ['moq', 'minimum order', 'sample', 'quantity', 'pack size', 'trial order'],
-    response: 'Ingredient Samples & Supply 📦\n\nTell us the material, evaluation quantity, annual volume and destination. Sample availability, pack size, MOQ and lead time are confirmed by grade and lot.'
+    keywords: ['moq', 'minimum order', 'prototype', 'sample machine', 'quantity', 'trial order'],
+    response: 'Prototype & Production 📦\n\nTell us the base model, custom functions, prototype quantity, production quantity and destination. MOQ and lead time depend on the approved configuration.'
   },
   {
-    keywords: ['document', 'report', 'customs', 'clearance', 'stability test', 'compatibility test', 'ingredient list', 'compliance'],
-    response: 'Raw-Material Documents 📄\n\nAvailable files may include TDS, SDS, INCI, representative COA and supporting quality or regulatory statements. Requirements are confirmed by material and market.'
+    keywords: ['payment', 'card', 'cashless', 'qr', 'wallet', 'coin', 'badge', 'age verification'],
+    response: 'Payments & Access 💳\n\nMachines can support bank cards, mobile wallets, QR, cash, employee badges, memberships and identity verification. Availability depends on the target market and payment provider.'
   },
   {
     keywords: ['price', 'cost', 'how much', 'cheap', 'discount', 'promotion', 'pricing', 'quote'],
-    response: 'Ingredient Quotation 💰\n\nShare the material or INCI, grade, target market, estimated volume and destination. Pricing follows the confirmed specification, pack size and quantity.'
+    response: 'Custom Machine Quotation 💰\n\nShare the model, product type, dispensing method, cooling, payment, branding, software requirements, quantity and destination. Pricing follows the approved configuration.'
   },
   {
-    keywords: ['shipping', 'delivery', 'logistics', 'transport', 'how long', 'freight', 'tracking'],
-    response: 'Order & Export Support 🚢\n\nShipment planning, carton marks, packing lists, commercial invoices and standard export coordination follow the confirmed order and Incoterms. The buyer’s importer-of-record, customs, duties and U.S. compliance responsibilities are agreed before shipment.'
+    keywords: ['cooling', 'refrigeration', 'frozen', 'temperature', 'heat', 'compressor'],
+    response: 'Temperature Configuration ❄️\n\nTell us the required storage range and ambient operating conditions. We can configure ambient, refrigerated, frozen or hot-food systems with remote temperature alerts.'
   },
   {
-    keywords: ['quality', 'damage', 'contamination', 'off-spec', 'inspect', 'inspection', 'qc', 'assay', 'microbiology', 'coa', 'traceability'],
-    response: 'Ingredient Quality Support 🛡️\n\nQualification can cover specification, identity or assay, microbiological limits, representative sample, COA, traceability and change notification.'
+    keywords: ['software', 'api', 'erp', 'telemetry', 'dashboard', 'inventory', 'remote', 'integration'],
+    response: 'Software & Integration 📊\n\nWe can configure machine telemetry, inventory and sales reporting, remote content, alerts, custom UI and API or ERP integration.'
   },
   {
-    keywords: ['payment', 'pay', 'method', 'wire', 'bank', 'credit', 'terms', 'TT', 'LC'],
-    response: 'Order Terms 💳\n\nPayment terms are confirmed clearly in the quotation and proforma invoice for each order. Our team keeps the order, QC, loading and document requirements aligned so there are no surprises before shipment.'
+    keywords: ['shipping', 'delivery', 'installation', 'logistics', 'transport', 'how long', 'freight', 'tracking'],
+    response: 'Delivery & Installation 🚚\n\nWe plan export packaging, freight, access requirements, installation, commissioning and operator training around the approved machine configuration and destination.'
   }
 ];
 
 const defaultReplies = [
-  'Thank you for contacting Aurelia Ingredients. Ask about INCI, use levels, samples, documentation, MOQ or pricing.',
-  'Hello! Share your formulation brief, target market, required documents and expected volume.',
-  'Welcome to Aurelia Ingredients. How can we support your raw-material evaluation?'
+  'Thank you for contacting Vendora Systems. Ask about base models, customization, payments, software, MOQ or pricing.',
+  'Hello! Share your product, vending scenario, custom functions, target market and expected quantity.',
+  'Welcome to Vendora Systems. How can we support your custom vending project?'
 ];
 
 //根据用户消息关键词生成客服回复
@@ -211,7 +211,7 @@ function validateProduct(body) {
   const errors = [];
   if (!body.name || body.name.length < 2 || body.name.length > 100)
     errors.push('Product name must be 2-100 characters');
-  if (!body.category || !['active-ingredients', 'botanical-extracts', 'functional-materials'].includes(body.category))
+  if (!body.category || !['snack-drink', 'fresh-food', 'specialty'].includes(body.category))
     errors.push('Please select a valid product category');
   if (!body.image)
     errors.push('Please provide a product image URL');
@@ -583,11 +583,11 @@ async function handleQuoteSubmit(payload, ws) {
 
   if (!market?.trim()) throw new Error('Target market is required');
   if (!targetCustomerProfile?.trim()) throw new Error('Company type, application and target market are required');
-  if (!specifications?.trim()) throw new Error('Ingredient, function, use level and document requirements are required');
+  if (!specifications?.trim()) throw new Error('Machine configuration, product and customization requirements are required');
   const quantity = Number(estimatedQuantity);
   if (!Number.isInteger(quantity) || quantity < 1) throw new Error('Estimated quantity must be a positive integer');
   const { items } = buildRfqAssortmentItems(ws.visitorId);
-  if (items.length === 0) throw new Error('Add at least one cosmetic ingredient to the RFQ list');
+  if (items.length === 0) throw new Error('Add at least one vending machine to the RFQ list');
 
   const now = new Date();
   const datePart = now.toISOString().slice(0, 10).replace(/-/g, '');
@@ -629,7 +629,7 @@ async function handleQuoteSubmit(payload, ws) {
     reference,
     status: quote.status,
     createdAt: quote.createdAt,
-    message: 'Ingredient RFQ received. Our team will review the materials, technical requirements, quantity, documents and delivery destination.'
+    message: 'Machine RFQ received. Our team will review the selected models, customization requirements, quantity and delivery destination.'
   };
 }
 
@@ -813,7 +813,7 @@ async function handleSupportMessageSend(payload, ws) {
 
     if (ws.user.role === 'guest' && customerMessageCount + 1 === 7) {
       createdMessages.push(appendMessage({
-        senderType: 'system', senderName: 'Aurelia Ingredient Support',
+        senderType: 'system', senderName: 'Vendora Machine Support',
         content: 'You have 3 guest messages remaining. Please register to continue chatting after the guest limit.',
       }));
     }
@@ -829,7 +829,7 @@ async function handleSupportMessageSend(payload, ws) {
         conversation.botEnabled = false;
         conversation.priority = 'high';
         createdMessages.push(appendMessage({
-          senderType: 'system', senderName: 'Aurelia Ingredient Support',
+          senderType: 'system', senderName: 'Vendora Machine Support',
           content: 'Your request has been added to our sales queue. A team member will join this conversation shortly.',
         }));
         larkNotification = {
@@ -903,7 +903,7 @@ async function handleSupportHandoffRequest(payload, ws) {
     conversation.resolvedAt = null;
     requested = true;
     createdMessages.push(appendMessage({
-      senderType: 'system', senderName: 'Aurelia Ingredient Support',
+      senderType: 'system', senderName: 'Vendora Machine Support',
       content: 'A sales representative has been requested. Please keep this window open; your conversation history will be shared with the team.',
     }));
   });
@@ -950,7 +950,7 @@ async function handleSupportClaim(payload, ws) {
     conversation.claimedByAccount = ws.user.account;
     conversation.resolvedAt = null;
     createdMessages.push(appendMessage({
-      senderType: 'system', senderName: 'Aurelia Ingredient Support',
+      senderType: 'system', senderName: 'Vendora Machine Support',
       content: `${conversation.assignedName} has joined the conversation as your ${ws.user.role === 'admin' ? 'support administrator' : 'sales representative'}.`,
     }));
   });
@@ -971,7 +971,7 @@ async function handleSupportTransfer(payload, ws) {
     conversation.assignedName = target.name || target.account;
     conversation.claimedByAccount = ws.user.account;
     createdMessages.push(appendMessage({
-      senderType: 'system', senderName: 'Aurelia Ingredient Support',
+      senderType: 'system', senderName: 'Vendora Machine Support',
       content: `This conversation has been transferred to ${conversation.assignedName}.`,
     }));
   });
@@ -989,7 +989,7 @@ async function handleSupportResolve(payload, ws) {
     conversation.botEnabled = false;
     conversation.resolvedAt = new Date().toISOString();
     createdMessages.push(appendMessage({
-      senderType: 'system', senderName: 'Aurelia Ingredient Support',
+      senderType: 'system', senderName: 'Vendora Machine Support',
       content: 'This conversation has been marked as resolved. Send another message whenever you need further assistance.',
     }));
   });

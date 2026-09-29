@@ -53,7 +53,7 @@ app.use('/api/auth', rateLimit({ windowMs: 15 * 60 * 1000, max: 30 }), authRoute
 app.use('/api/products', productRoutes);  // Product management
 //挂载购物车相关接口路由
 //挂载客服相关接口路由
-app.use('/api/support', rateLimit({ windowMs: 60 * 1000, max: 60 }), supportRoutes); // Cosmetic ingredient support
+app.use('/api/support', rateLimit({ windowMs: 60 * 1000, max: 60 }), supportRoutes); // Custom vending support
 //挂载公开询价相关接口路由
 app.use('/api/quotes', rateLimit({ windowMs: 15 * 60 * 1000, max: 20 }), quoteRoutes); // Public and private quote intake
 app.use('/api/privacy', rateLimit({ windowMs: 60 * 60 * 1000, max: 5 }), privacyRoutes);
@@ -124,8 +124,8 @@ async function startServer() {
   wsServer = createWSServer(server);
   server.listen(PORT, HOST, () => {
   console.log('╔══════════════════════════════════════════╗');
-  console.log('║     Aurelia Ingredients                  ║');
-  console.log('║     Cosmetic Ingredients · B2B Supply    ║');
+  console.log('║     Vendora Systems                      ║');
+  console.log('║     Custom Vending · OEM / ODM           ║');
   console.log(`║   HTTP:   http://${displayHost}:${PORT}                    ║`);
   console.log(`║   WS:     ws://${displayHost}:${PORT}/ws                    ║`);
   console.log(`║   Mode:   ${ENV}                  ║`);
