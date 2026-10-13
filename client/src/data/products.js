@@ -1,14 +1,14 @@
 export const categories = [
   { id: 'all', name: 'All Machines' },
-  { id: 'snack-drink', name: 'Snack & Drink' },
-  { id: 'fresh-food', name: 'Fresh Food' },
-  { id: 'specialty', name: 'Specialty Retail' },
+  { id: 'floor-stand', name: 'Floor Standing' },
+  { id: 'wall-mounted', name: 'Wall Mounted' },
+  { id: 'elevator', name: 'Elevator Vending' },
 ];
 
 export const productGroups = [
-  { title: 'Snack & Drink', description: 'Reliable ambient and refrigerated machines for offices, campuses and transport hubs.', categories: ['snack-drink'] },
-  { title: 'Fresh Food', description: 'Temperature-controlled smart retail for meals, produce and premium grab-and-go.', categories: ['fresh-food'] },
-  { title: 'Specialty Retail', description: 'Flexible lockers and vending platforms for PPE, electronics, travel essentials and convenience goods.', categories: ['specialty'] },
+  { title: 'Floor Standing', description: 'Large-capacity machines with prominent displays and flexible dispensing lanes.', categories: ['floor-stand'] },
+  { title: 'Wall Mounted', description: 'Compact touchscreen vending for locations where floor space is limited.', categories: ['wall-mounted'] },
+  { title: 'Elevator Vending', description: 'Controlled elevator delivery for snacks, meals and delicate packaged products.', categories: ['elevator'] },
 ];
 
 export const categoryNames = Object.fromEntries(categories.filter(({ id }) => id !== 'all').map(({ id, name }) => [id, name]));

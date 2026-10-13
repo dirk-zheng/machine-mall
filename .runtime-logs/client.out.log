@@ -1,0 +1,12 @@
+
+> vendora-systems-client@1.0.0 dev
+> vite --host 0.0.0.0
+
+
+  VITE v5.4.21  ready in 260 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://172.19.112.1:5173/
+  ➜  Network: http://192.168.109.216:5173/
+  ➜  Network: http://192.168.56.1:5173/
+  ➜  press h + enter to show help

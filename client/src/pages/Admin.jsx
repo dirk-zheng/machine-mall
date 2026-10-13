@@ -4,14 +4,14 @@ import { useStore } from '../context/StoreContext';
 import { categories, categoryNames } from '../data/products';
 
 const categoryIcons = {
-  'snack-drink': Sparkles,
-  'fresh-food': Package,
-  'specialty': Sparkles,
+  'floor-stand': Package,
+  'wall-mounted': Sparkles,
+  'elevator': Package,
 };
 
 const initialForm = {
   name: '',
-  category: 'snack-drink',
+  category: 'floor-stand',
   moq: '',
   leadTime: '',
   inci: '',
@@ -326,7 +326,7 @@ export default function Admin() {
                               //处理页面交互事件
                               return setForm({ ...form, name: e.target.value });
                             }}
-                  placeholder="e.g. Vendora Combo 700"
+                  placeholder="e.g. ZH-T4 Large Vertical Vending Machine"
                   className={`w-full px-4 py-3 rounded-xl bg-white border ${errors.name ? 'border-red-500' : 'border-dark-200'} focus:border-primary focus:ring-2 focus:ring-primary/10`}
                 />
                 {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
@@ -357,7 +357,7 @@ export default function Admin() {
                 <label className="block"><span className="block text-sm font-medium mb-2 text-dark-700">Best for</span><input value={form.recommendedUse} onChange={(e) => setForm({ ...form, recommendedUse: e.target.value })} placeholder="e.g. offices and campuses" className="w-full px-4 py-3 rounded-xl bg-white border border-dark-200 focus:border-primary focus:ring-2 focus:ring-primary/10" /></label>
                 <label className="block"><span className="block text-sm font-medium mb-2 text-dark-700">Temperature / cooling</span><input value={form.solubility} onChange={(e) => setForm({ ...form, solubility: e.target.value })} placeholder="e.g. 2–8°C refrigeration" className="w-full px-4 py-3 rounded-xl bg-white border border-dark-200 focus:border-primary focus:ring-2 focus:ring-primary/10" /></label>
                 <label className="block"><span className="block text-sm font-medium mb-2 text-dark-700">Machine dimensions</span><input value={form.sizes} onChange={(e) => setForm({ ...form, sizes: e.target.value })} placeholder="e.g. 1830 × 1180 × 850 mm" className="w-full px-4 py-3 rounded-xl bg-white border border-dark-200 focus:border-primary focus:ring-2 focus:ring-primary/10" /></label>
-                <label className="block"><span className="block text-sm font-medium mb-2 text-dark-700">Primary function</span><input value={form.benefit} onChange={(e) => setForm({ ...form, benefit: e.target.value })} placeholder="e.g. Tone + barrier support" className="w-full px-4 py-3 rounded-xl bg-white border border-dark-200 focus:border-primary focus:ring-2 focus:ring-primary/10" /></label>
+                <label className="block"><span className="block text-sm font-medium mb-2 text-dark-700">Primary function</span><input value={form.benefit} onChange={(e) => setForm({ ...form, benefit: e.target.value })} placeholder="e.g. Elevator delivery for delicate products" className="w-full px-4 py-3 rounded-xl bg-white border border-dark-200 focus:border-primary focus:ring-2 focus:ring-primary/10" /></label>
                 <label className="block"><span className="block text-sm font-medium mb-2 text-dark-700">Portfolio badge</span><input value={form.badge} onChange={(e) => setForm({ ...form, badge: e.target.value })} placeholder="e.g. High purity" className="w-full px-4 py-3 rounded-xl bg-white border border-dark-200 focus:border-primary focus:ring-2 focus:ring-primary/10" /></label>
               </div>
 

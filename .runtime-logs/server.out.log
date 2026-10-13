@@ -1,0 +1,18 @@
+
+> vendora-systems-server@1.0.0 start
+> node index.js
+
+◇ injected env (18) from .env // tip: ⌘ suppress logs { quiet: true }
+◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+  Fixed administrator synchronized: admin
+  WebSocket server: ws://localhost:3001/ws
+╔══════════════════════════════════════════╗
+║     Vendora Systems                      ║
+║     Custom Vending · OEM / ODM           ║
+║   HTTP:   http://localhost:3001                    ║
+║   WS:     ws://localhost:3001/ws                    ║
+║   Mode:   development                  ║
+╚══════════════════════════════════════════╝
+[2026-10-13T07:03:18.725Z] GET /api/health
+[2026-10-13T07:04:45.247Z] GET /api/articles
+[2026-10-13T07:04:57.267Z] GET /api/faqs
