@@ -75,7 +75,7 @@ export default function NewsBlog({ initialArticles = [] }) {
         <div className="absolute -top-32 right-0 w-[34rem] h-[34rem] rounded-full bg-primary/20 blur-3xl" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-24">
           <div className="max-w-3xl animate-slide-up">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-orange-400/20 bg-orange-400/10 text-orange-200 text-sm mb-6"><BookOpen size={15} />Vending Operator Resources</div>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-cyan-400/20 bg-cyan-400/10 text-cyan-200 text-sm mb-6"><BookOpen size={15} />Vending Operator Resources</div>
             <h1 className="font-heading text-4xl md:text-6xl font-bold leading-tight mb-5">Practical notes for<br />the vending floor.</h1>
             <p className="text-lg text-slate-300 leading-relaxed max-w-2xl">Operator guidance on site planning, payments, assortment, replenishment and connected fleet decisions.</p>
           </div>
@@ -152,9 +152,9 @@ export default function NewsBlog({ initialArticles = [] }) {
           )}
         </section>
 
-        <section className="mt-16 rounded-3xl bg-gradient-to-br from-orange-600 to-amber-500 p-8 md:p-12 text-white flex flex-col md:flex-row md:items-center justify-between gap-8">
-          <div className="max-w-2xl"><div className="flex items-center gap-2 text-orange-100 text-sm font-medium mb-3"><CheckCircle2 size={17} />Planning a machine rollout?</div><h2 className="font-heading text-3xl font-bold mb-3">Review the questions operators ask most.</h2><p className="text-orange-50/90">Capacity, cooling, payment setup, connectivity, site access, lead time and service coverage.</p></div>
-          <Link to="/faq" className="shrink-0 inline-flex items-center justify-center gap-2 bg-white text-orange-700 px-6 py-3.5 rounded-xl font-semibold hover:bg-orange-50 transition-colors">Browse FAQ <ArrowRight size={18} /></Link>
+        <section className="mt-16 rounded-3xl bg-gradient-to-br from-cyan-700 to-sky-500 p-8 md:p-12 text-white flex flex-col md:flex-row md:items-center justify-between gap-8">
+          <div className="max-w-2xl"><div className="flex items-center gap-2 text-cyan-100 text-sm font-medium mb-3"><CheckCircle2 size={17} />Planning a machine rollout?</div><h2 className="font-heading text-3xl font-bold mb-3">Review the questions operators ask most.</h2><p className="text-cyan-50/90">Capacity, cooling, payment setup, connectivity, site access, lead time and service coverage.</p></div>
+          <Link to="/faq" className="shrink-0 inline-flex items-center justify-center gap-2 bg-white text-cyan-700 px-6 py-3.5 rounded-xl font-semibold hover:bg-cyan-50 transition-colors">Browse FAQ <ArrowRight size={18} /></Link>
         </section>
       </main>
     </div>

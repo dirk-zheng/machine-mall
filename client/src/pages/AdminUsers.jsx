@@ -108,7 +108,7 @@ export default function AdminUsers({ manageRoles = false }) {
                   <tr key={user.account} className="border-t border-slate-100">
                     <td className="p-4">
                       <span className="flex items-center gap-3 font-semibold text-slate-900">
-                        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-orange-50 text-primary"><UserRound size={18} /></span>
+                        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-cyan-50 text-primary"><UserRound size={18} /></span>
                         {user.name}
                       </span>
                     </td>

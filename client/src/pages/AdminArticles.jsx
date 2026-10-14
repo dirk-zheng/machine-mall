@@ -54,7 +54,7 @@ export default function AdminArticles() {
               <label className="block"><span className="mb-2 block text-sm font-semibold text-slate-700">Category</span><select name="category" value={form.category} onChange={update} className="w-full rounded-xl border-slate-300"><option value="deployment">Deployment</option><option value="payments">Payments</option><option value="operations">Operations</option><option value="service">Service</option></select></label>
               <label className="block"><span className="mb-2 block text-sm font-semibold text-slate-700">Status</span><select name="status" value={form.status} onChange={update} className="w-full rounded-xl border-slate-300"><option value="draft">Draft</option><option value="review">Ready for review</option><option value="published">Published</option></select></label>
             </div>
-            {message && <p className="mt-5 rounded-xl bg-orange-50 p-4 text-sm text-orange-800">{message}</p>}
+            {message && <p className="mt-5 rounded-xl bg-cyan-50 p-4 text-sm text-cyan-800">{message}</p>}
             <button disabled={saving} className="mt-6 rounded-xl bg-primary px-6 py-3 font-semibold text-white disabled:opacity-50">{saving ? 'Saving…' : 'Save resource'}</button>
           </form>
           <section className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">

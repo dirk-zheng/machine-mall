@@ -47,7 +47,7 @@ export default function AdminToolRail() {
             key={path}
             to={path}
             title={label}
-            className={`flex h-11 items-center rounded-xl transition-colors ${pathname === path ? 'bg-primary text-white' : 'text-slate-600 hover:bg-orange-50 hover:text-primary'}`}
+            className={`flex h-11 items-center rounded-xl transition-colors ${pathname === path ? 'bg-primary text-white' : 'text-slate-600 hover:bg-cyan-50 hover:text-primary'}`}
           >
             <span className="flex w-11 shrink-0 items-center justify-center"><Icon size={20} /></span>
             <span className="whitespace-nowrap pr-4 text-sm font-medium">{label}</span>

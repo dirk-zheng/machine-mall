@@ -1,16 +1,19 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+const devServerTarget = process.env.VITE_DEV_SERVER_TARGET || 'http://localhost:3001'
+const devWebSocketTarget = devServerTarget.replace(/^http/, 'ws')
+
 export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3001',
+        target: devServerTarget,
         changeOrigin: true
       },
       '/ws': {
-        target: 'ws://localhost:3001',
+        target: devWebSocketTarget,
         ws: true,
         changeOrigin: true
       }

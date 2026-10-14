@@ -7,9 +7,9 @@ import { clearOptionalLocalData, defaultPrivacyPreferences, getPrivacyPreference
 
 function LegalLayout({ eyebrow, title, children }) {
   return (
-    <div className="min-h-screen bg-[#fbf8f2] pt-24">
-      <header className="bg-[#17251f] px-5 py-14 text-white">
-        <div className="mx-auto max-w-4xl"><p className="text-xs font-bold uppercase tracking-[.2em] text-[#e8a182]">{eyebrow}</p><h1 className="mt-3 font-heading text-4xl font-bold sm:text-5xl">{title}</h1><p className="mt-3 text-sm text-white/60">Effective {businessConfig.effectiveDate}</p></div>
+    <div className="min-h-screen bg-[#f7f9fc] pt-24">
+      <header className="bg-[#111827] px-5 py-14 text-white">
+        <div className="mx-auto max-w-4xl"><p className="text-xs font-bold uppercase tracking-[.2em] text-[#8dd9e8]">{eyebrow}</p><h1 className="mt-3 font-heading text-4xl font-bold sm:text-5xl">{title}</h1><p className="mt-3 text-sm text-white/60">Effective {businessConfig.effectiveDate}</p></div>
       </header>
       <main className="legal-copy mx-auto max-w-4xl px-5 py-12">{children}</main>
     </div>
@@ -52,7 +52,7 @@ export function PrivacyChoices() {
   };
   return <LegalLayout eyebrow="Privacy" title="Privacy Choices">
     <p>An essential visitor identifier keeps your RFQs, account association, and support conversation connected. It cannot be disabled while using those features. Optional analytics is allowed by default and is currently <strong>{prefs.analytics ? 'allowed' : 'off'}</strong>.</p>
-    <div className="mt-8 flex flex-wrap gap-3"><button onClick={() => choose(true)} className="rounded-full bg-[#17251f] px-5 py-3 font-semibold text-white">Allow analytics</button><button onClick={() => choose(false)} className="rounded-full border border-[#17251f]/20 px-5 py-3 font-semibold">Essential only</button></div>
+    <div className="mt-8 flex flex-wrap gap-3"><button onClick={() => choose(true)} className="rounded-full bg-[#111827] px-5 py-3 font-semibold text-white">Allow analytics</button><button onClick={() => choose(false)} className="rounded-full border border-[#111827]/20 px-5 py-3 font-semibold">Essential only</button></div>
     <p className="mt-8 text-sm">Changing this choice does not delete RFQs, accounts, or support records. Use the <Link to="/privacy-request">Privacy Request</Link> form for a data request.</p>
   </LegalLayout>;
 }
@@ -78,7 +78,7 @@ export function PrivacyRequest() {
       <label className="block"><span className="mb-2 block text-sm font-semibold">Details</span><textarea rows="5" maxLength="1500" value={form.details} onChange={(e) => setForm({ ...form, details: e.target.value })} className="w-full rounded-xl" /></label>
       {state.error && <p role="alert" className="rounded-xl bg-red-50 p-3 text-sm text-red-700">{state.error}</p>}
       {state.reference && <p role="status" className="rounded-xl bg-emerald-50 p-3 text-sm text-emerald-800">Request received. Reference: <strong>{state.reference}</strong>. We will verify your identity before processing it.</p>}
-      <button disabled={state.sending} className="rounded-full bg-[#17251f] px-6 py-3 font-semibold text-white disabled:opacity-50">{state.sending ? 'Submitting…' : 'Submit request'}</button>
+      <button disabled={state.sending} className="rounded-full bg-[#111827] px-6 py-3 font-semibold text-white disabled:opacity-50">{state.sending ? 'Submitting…' : 'Submit request'}</button>
     </form>
   </LegalLayout>;
 }

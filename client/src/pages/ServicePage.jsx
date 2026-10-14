@@ -11,10 +11,10 @@ export default function ServicePage() {
 
   return (
     <div className="min-h-screen pt-24 bg-slate-50">
-      <header className="bg-[#2d201d] text-white">
+      <header className="bg-[#172033] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 grid lg:grid-cols-[1.1fr_.9fr] gap-12 items-center">
           <div>
-            <p className="text-[#eeb8a8] font-semibold uppercase tracking-wider text-sm mb-4">{service.eyebrow}</p>
+            <p className="text-[#8dd9e8] font-semibold uppercase tracking-wider text-sm mb-4">{service.eyebrow}</p>
             <h1 className="font-heading text-4xl md:text-6xl font-bold leading-tight mb-6">{service.title}</h1>
             <p className="text-lg text-slate-300 leading-relaxed">{service.intro}</p>
           </div>
@@ -33,9 +33,9 @@ export default function ServicePage() {
             );
           })}
         </div>
-        <section className="mt-12 rounded-3xl bg-gradient-to-r from-[#8f463e] to-[#c77b6e] text-white p-8 md:p-10 flex flex-col md:flex-row gap-6 md:items-center justify-between">
+        <section className="mt-12 rounded-3xl bg-gradient-to-r from-[#075f85] to-[#19b7d0] text-white p-8 md:p-10 flex flex-col md:flex-row gap-6 md:items-center justify-between">
           <div><h2 className="font-heading text-3xl font-bold mb-2">Bring us your location plan</h2><p className="text-white/80">Tell us about the site, traffic, product mix and rollout target.</p></div>
-          <Link to="/contact" className="shrink-0 inline-flex items-center gap-2 bg-white text-[#bd481b] px-6 py-3.5 rounded-xl font-semibold">Contact the vending team <ArrowRight size={18} /></Link>
+          <Link to="/contact" className="shrink-0 inline-flex items-center gap-2 bg-white text-[#075f85] px-6 py-3.5 rounded-xl font-semibold">Contact the vending team <ArrowRight size={18} /></Link>
         </section>
       </main>
     </div>
